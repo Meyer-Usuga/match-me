@@ -20,4 +20,20 @@ export class AuthController {
             next(error); 
         }
     }
+
+    public login = async (
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> => {
+        try {
+            const { body } = req;
+
+            const user = await this.authService.login(body);
+
+            res.status(200).json(user);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
