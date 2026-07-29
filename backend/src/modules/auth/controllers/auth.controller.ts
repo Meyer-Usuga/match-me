@@ -1,4 +1,4 @@
-import { Request, Response } from "express"; 
+import { NextFunction, Request, Response } from "express"; 
 import { AuthService } from "../services/auth.service";
 
 export class AuthController { 
@@ -6,13 +6,18 @@ export class AuthController {
 
     public register = async (
         req: Request, 
-        res: Response
-    ): Promise<Response> => {
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> => {
+        try {
+            const { body } = req; 
             
-        const { body } = req; 
-        
-        const user = await this.authService.register(body);
+            const user = await this.authService.register(body);
 
-        return res.status(201).json(user); 
+            res.status(201).json(user); 
+
+        } catch (error) {
+            next(error); 
+        }
     }
 }

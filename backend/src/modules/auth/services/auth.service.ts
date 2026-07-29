@@ -1,6 +1,7 @@
 import { UserRepository } from "@/modules/users/repositories/user.repository";
 import { RegisterUserDto } from "../dtos/register.dto";
 import bcrypt from "bcrypt";
+import { AppError } from "@/utils/errors/app-error";
 
 export class AuthService {
   constructor(private readonly userRepository: UserRepository) {}
@@ -11,7 +12,10 @@ export class AuthService {
     const user = await this.userRepository.findByEmail(email);
 
     if (user) {
-      throw new Error("User already exists");
+      throw new AppError({
+        message: "Email already in use",
+        statusCode: 409
+      });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
