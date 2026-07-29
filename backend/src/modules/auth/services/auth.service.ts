@@ -6,9 +6,13 @@ import {
   RegisterUserDto 
 } from "../dtos";
 import bcrypt from "bcrypt";
+import { TokenService } from "./token.service";
 
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly tokenService: TokenService,
+  ) {}
 
   public async register(dto: RegisterUserDto): Promise<AuthResponseDto> {
     const { email, password } = dto;
@@ -29,9 +33,12 @@ export class AuthService {
       password: passwordHash
     });
 
+    const accessToken = this.tokenService.generateToken({ userId: user.id })
+
     return {
       name: dto.name,
       email: dto.email,
+      accessToken,
     };
   }
 
@@ -56,9 +63,12 @@ export class AuthService {
       });
     }
 
+    const accessToken = this.tokenService.generateToken({ userId: user.id })
+
     return {
       name: user.name,
       email: user.email,
+      accessToken,
     };
   }
 }
