@@ -1,0 +1,21 @@
+/* Definition of variables for resolutions */
+$breakpoint-value-xs: 376px;
+$breakpoint-value-sm: 576px;
+$breakpoint-value-md: 768px;
+$breakpoint-value-lg: 1024px;
+$breakpoint-value-xl: 1440px;
+$breakpoint-value-xxl: 1100px;
+
+/* Media query minimum */
+$breakpoint-xs: "min-width: 376px";
+$breakpoint-sm: "min-width: 576px";
+$breakpoint-md: "min-width: 768px";
+$breakpoint-lg: "min-width: 1024px";
+$breakpoint-xl: "min-width: 1440px";
+
+/* Media query maximum */
+$breakpoint-xs-down: "max-width: 376px";
+$breakpoint-sm-down: "max-width: 576px";
+$breakpoint-md-down: "max-width: 768px";
+$breakpoint-lg-down: "max-width: 1024px";
+$breakpoint-xl-down: "max-width: 1440px";

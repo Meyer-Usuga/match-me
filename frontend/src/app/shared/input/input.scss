@@ -1,0 +1,45 @@
+@use '../../../styles/utils' as *;
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: pxToRem(6);
+
+  &__label {
+    font-size: pxToRem(13);
+    font-weight: 500;
+    color: $color-neutral;
+    opacity: 0.75;
+  }
+
+  &__control {
+    padding: pxToRem(10) pxToRem(14);
+    border: 1px solid rgba($color-neutral, 0.15);
+    border-radius: pxToRem(10);
+    font-size: pxToRem(15);
+    font-family: inherit;
+    color: $color-neutral;
+    background: rgba($color-neutral, 0.02);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &::placeholder {
+      color: rgba($color-neutral, 0.35);
+    }
+
+    &:focus {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+      background: $color-white;
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: #e74c5e;
+    }
+  }
+
+  &__error {
+    font-size: pxToRem(12);
+    color: #e74c5e;
+  }
+}

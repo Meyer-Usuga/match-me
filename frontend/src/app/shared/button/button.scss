@@ -1,0 +1,54 @@
+@use '../../../styles/utils' as *;
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: pxToRem(8);
+  padding: pxToRem(12) pxToRem(32);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: pxToRem(15);
+  font-weight: 600;
+  font-family: inherit;
+  color: $color-white;
+  background: linear-gradient(135deg, #F857C1, #C85AF4 50%, #7C3AED);
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter 0.2s, transform 0.15s;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  &--secondary {
+    color: $color-neutral;
+    background: transparent;
+    border-color: rgba($color-neutral, 0.15);
+
+    &:hover {
+      background: rgba($color-neutral, 0.04);
+      border-color: rgba($color-neutral, 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      background: transparent;
+      border-color: rgba($color-neutral, 0.1);
+    }
+  }
+
+  &--full {
+    width: 100%;
+  }
+}

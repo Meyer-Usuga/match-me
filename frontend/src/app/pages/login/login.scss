@@ -1,0 +1,113 @@
+@use '../../../styles/utils' as *;
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh;
+  padding: pxToRem(24);
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+
+  &__card {
+    width: 100%;
+    max-width: pxToRem(400);
+    padding: pxToRem(40) pxToRem(32);
+    background: $color-white;
+    border-radius: pxToRem(16);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  &__title {
+    margin: 0 0 pxToRem(4);
+    font-size: pxToRem(24);
+    font-weight: 600;
+    color: $color-neutral;
+    text-align: center;
+  }
+
+  &__subtitle {
+    margin: 0 0 pxToRem(32);
+    font-size: pxToRem(14);
+    color: $color-neutral;
+    opacity: 0.5;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(20);
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(6);
+  }
+
+  &__label {
+    font-size: pxToRem(13);
+    font-weight: 500;
+    color: $color-neutral;
+    opacity: 0.75;
+  }
+
+  &__input {
+    padding: pxToRem(10) pxToRem(14);
+    border: 1px solid rgba($color-neutral, 0.15);
+    border-radius: pxToRem(10);
+    font-size: pxToRem(15);
+    font-family: inherit;
+    color: $color-neutral;
+    background: rgba($color-neutral, 0.02);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &::placeholder {
+      color: rgba($color-neutral, 0.35);
+    }
+
+    &:focus {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+      background: $color-white;
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: #e74c5e;
+    }
+  }
+
+  &__error {
+    font-size: pxToRem(12);
+    color: #e74c5e;
+  }
+
+  &__submit {
+    margin-top: pxToRem(12);
+    padding: pxToRem(12);
+    border: none;
+    border-radius: pxToRem(10);
+    font-size: pxToRem(15);
+    font-weight: 600;
+    font-family: inherit;
+    color: $color-white;
+    background: linear-gradient(135deg, #F857C1, #C85AF4 50%, #7C3AED);
+    cursor: pointer;
+    transition: filter 0.2s, transform 0.15s;
+
+    &:hover:not(:disabled) {
+      filter: brightness(1.08);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+}

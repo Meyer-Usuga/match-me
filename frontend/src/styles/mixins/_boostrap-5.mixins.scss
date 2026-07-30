@@ -1,0 +1,202 @@
+$bs-gutter-x: 1.8rem;
+$bs-gutter-y: 0;
+
+$container-max-widths: (
+  xs: 344px,
+  sm: 512px,
+  md: 688px,
+  lg: 928px,
+  xl: 1288px,
+);
+$breakpoints: (
+  xs: 376px,
+  sm: 576px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1440px,
+);
+@mixin container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width: map-get($breakpoints, xs)) and (max-width: (map-get($breakpoints, sm) - 1px)) {
+    max-width: map-get($container-max-widths, xs);
+  }
+
+  @media (min-width: map-get($breakpoints, sm)) and (max-width: (map-get($breakpoints, md) - 1px)) {
+    max-width: map-get($container-max-widths, sm);
+  }
+
+  @media (min-width: map-get($breakpoints, md)) and (max-width: (map-get($breakpoints, lg) - 1px)) {
+    max-width: map-get($container-max-widths, md);
+  }
+
+  @media (min-width: map-get($breakpoints, lg)) and (max-width: (map-get($breakpoints, xl) - 1px)) {
+    max-width: map-get($container-max-widths, lg);
+  }
+
+  @media (min-width: map-get($breakpoints, xl)) {
+    max-width: map-get($container-max-widths, xl);
+  }
+}
+
+@mixin container-fluid {
+  width: 100%;
+  padding-right: calc(#{$bs-gutter-x} * 0.5);
+  padding-left: calc(#{$bs-gutter-x} * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@mixin row {
+  display: flex;
+  flex-wrap: wrap;
+
+  @if $bs-gutter-y !=0 {
+    margin-top: calc(-1 * #{$bs-gutter-y});
+  }
+
+  margin-right: calc(-0.5 * #{$bs-gutter-x});
+  margin-left: calc(-0.5 * #{$bs-gutter-x});
+}
+
+@mixin col($cols: null) {
+  @if $cols == "auto" {
+    flex: 0 0 auto;
+    width: auto;
+  } @else if $cols {
+    $col-width: calc(100% / 12 * $cols);
+    flex: 0 0 #{$col-width};
+    max-width: #{$col-width};
+  } @else {
+    flex: 1 0 0%;
+    max-width: 100%;
+  }
+}
+
+@mixin col-xs($cols: null) {
+  @media (min-width: map-get($breakpoints, xs)) and (max-width: (map-get($breakpoints, sm) - 1px)) {
+    @include col($cols);
+  }
+}
+
+@mixin col-sm($cols: null) {
+  @media (min-width: map-get($breakpoints, sm)) and (max-width: (map-get($breakpoints, md) - 1px)) {
+    @include col($cols);
+  }
+}
+
+@mixin col-md($cols: null) {
+  @media (min-width: map-get($breakpoints, md)) and (max-width: (map-get($breakpoints, lg) - 1px)) {
+    @include col($cols);
+  }
+}
+
+@mixin col-lg($cols: null) {
+  @media (min-width: map-get($breakpoints, lg)) and (max-width: (map-get($breakpoints, xl) - 1px)) {
+    @include col($cols);
+  }
+}
+
+@mixin col-xl($cols: null) {
+  @media (min-width: map-get($breakpoints, xl)) {
+    @include col($cols);
+  }
+}
+
+@mixin container-xs {
+  @media (min-width: map-get($breakpoints, xs)) and (max-width: (map-get($breakpoints, sm) - 1px)) {
+    max-width: map-get($container-max-widths, xs);
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@mixin container-sm {
+  @media (min-width: map-get($breakpoints, sm)) and (max-width: (map-get($breakpoints, md) - 1px)) {
+    max-width: map-get($container-max-widths, sm);
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@mixin container-md {
+  @media (min-width: map-get($breakpoints, md)) and (max-width: (map-get($breakpoints, lg) - 1px)) {
+    max-width: map-get($container-max-widths, md);
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@mixin container-lg {
+  @media (min-width: map-get($breakpoints, lg)) and (max-width: (map-get($breakpoints, xl) - 1px)) {
+    max-width: map-get($container-max-widths, lg);
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@mixin container-xl {
+  @media (min-width: map-get($breakpoints, xl)) {
+    max-width: map-get($container-max-widths, xl);
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@mixin col-auto($breakpoint: null) {
+  @if $breakpoint {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      flex: 0 0 auto;
+      width: auto;
+    }
+  } @else {
+    flex: 0 0 auto;
+    width: auto;
+  }
+}
+
+@mixin row-cols($cols: null) {
+  & > * {
+    @if $cols == "auto" {
+      flex: 0 0 auto;
+      width: auto;
+    } @else if $cols {
+      width: calc(100% / #{$cols});
+    } @else {
+      flex: 1 0 0%;
+      max-width: 100%;
+    }
+  }
+}
+
+@mixin row-cols-xs($cols: null) {
+  @media (min-width: map-get($breakpoints, xs)) and (max-width: (map-get($breakpoints, sm) - 1px)) {
+    @include row-cols($cols);
+  }
+}
+
+@mixin row-cols-sm($cols: null) {
+  @media (min-width: map-get($breakpoints, sm)) and (max-width: (map-get($breakpoints, md) - 1px)) {
+    @include row-cols($cols);
+  }
+}
+
+@mixin row-cols-md($cols: null) {
+  @media (min-width: map-get($breakpoints, md)) and (max-width: (map-get($breakpoints, lg) - 1px)) {
+    @include row-cols($cols);
+  }
+}
+
+@mixin row-cols-lg($cols: null) {
+  @media (min-width: map-get($breakpoints, lg)) and (max-width: (map-get($breakpoints, xl) - 1px)) {
+    @include row-cols($cols);
+  }
+}
+
+@mixin row-cols-xl($cols: null) {
+  @media (min-width: map-get($breakpoints, xl)) {
+    @include row-cols($cols);
+  }
+}

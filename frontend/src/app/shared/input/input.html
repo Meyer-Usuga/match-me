@@ -1,0 +1,13 @@
+<div class="input">
+  <label class="input__label" [attr.for]="id()">{{ label() }}</label>
+  <input
+    class="input__control"
+    [id]="id()"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [attr.autocomplete]="autocomplete()"
+  />
+  @if (error()) {
+    <span class="input__error">{{ error() }}</span>
+  }
+</div>

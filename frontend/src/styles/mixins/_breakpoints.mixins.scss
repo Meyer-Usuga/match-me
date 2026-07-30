@@ -1,0 +1,77 @@
+@use "../variables/breakpoints.variables" as variables;
+
+@function media-max-width-correction($breakpoint) {
+  @return $breakpoint - 0.1px;
+}
+
+@mixin media-xs {
+  @media (max-width: media-max-width-correction(variables.$breakpoint-value-sm)) {
+    @content;
+  }
+}
+
+@mixin media-gtxs {
+  @media (min-width: variables.$breakpoint-value-sm) {
+    @content;
+  }
+}
+
+@mixin media-sm {
+  @media (min-width: variables.$breakpoint-value-sm) and (max-width: media-max-width-correction(variables.$breakpoint-value-md)) {
+    @content;
+  }
+}
+
+@mixin media-gtsm {
+  @media (min-width: variables.$breakpoint-value-md) {
+    @content;
+  }
+}
+
+@mixin media-md {
+  @media (min-width: variables.$breakpoint-value-md) and (max-width: media-max-width-correction(variables.$breakpoint-value-lg)) {
+    @content;
+  }
+}
+
+@mixin media-ltmd {
+  @media (max-width: media-max-width-correction(variables.$breakpoint-value-md)) {
+    @content;
+  }
+}
+
+@mixin media-gtmd {
+  @media (min-width: variables.$breakpoint-value-lg) {
+    @content;
+  }
+}
+
+@mixin media-lg {
+  @media (min-width: variables.$breakpoint-value-lg) and (max-width: media-max-width-correction(variables.$breakpoint-value-xl)) {
+    @content;
+  }
+}
+
+@mixin media-ltlg {
+  @media (max-width: media-max-width-correction(variables.$breakpoint-value-lg)) {
+    @content;
+  }
+}
+
+@mixin media-xl {
+  @media (min-width: variables.$breakpoint-value-xl) {
+    @content;
+  }
+}
+
+@mixin media-height-xxl {
+  @media (min-height: variables.$breakpoint-value-xxl) {
+    @content;
+  }
+}
+
+@mixin media-ltxl {
+  @media (max-width: media-max-width-correction(variables.$breakpoint-value-xl)) {
+    @content;
+  }
+}
