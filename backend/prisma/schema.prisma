@@ -27,17 +27,37 @@ model User {
 }
 
 model Analysis {
-  id        String   @id @default(uuid())
+  id             String         @id @default(uuid())
 
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  userId         String?
+  user           User?          @relation(fields: [userId], references: [id])
 
-  company   String?
-  jobTitle  String?
-  score     Float?
-  summary   String?
+  company        String?
+  jobTitle       String?
 
-  createdAt DateTime @default(now())
+  jobDescription String
+
+  cvText         String?
+
+  score          Float?
+
+  matchedSkills  Json?
+  missingSkills  Json?
+
+  aiResult       Json?
+
+  status         AnalysisStatus @default(PENDING)
+
+  errorMessage   String?
+
+  createdAt      DateTime       @default(now())
 
   @@map("analyses")
+}
+
+enum AnalysisStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
 }
