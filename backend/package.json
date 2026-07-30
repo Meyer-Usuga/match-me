@@ -12,12 +12,14 @@
     "@prisma/client": "^6.19.3",
     "bcrypt": "^6.0.0",
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.3"
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.2.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.2.0",
     "@types/node": "^24.3.0",
     "prisma": "^6.19.3",
     "tsx": "^4.20.5",
