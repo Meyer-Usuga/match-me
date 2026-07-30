@@ -1,42 +1,81 @@
 @use '../../../styles/utils' as *;
 
 .home {
-  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: $color-white;
 
+  // ─── Hero ──────────────────────────────────────────────────────
+
   &__hero {
+    display: flex;
+    flex-direction: column;
+    padding: pxToRem(80) pxToRem(24) 0;
+
+    @include media-gtsm {
+      padding: pxToRem(80) pxToRem(48) 0;
+    }
+  }
+
+  &__hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: pxToRem(48);
+    width: 100%;
+    max-width: pxToRem(1100);
+    margin: 0 auto;
+
+    @include media-gtsm {
+      flex-direction: row;
+      align-items: center;
+      gap: pxToRem(64);
+    }
+  }
+
+  &__hero-left {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: pxToRem(32);
     text-align: center;
+
+    @include media-gtsm {
+      align-items: flex-start;
+      text-align: left;
+    }
   }
 
-  &__logo {
-    width: pxToRem(80);
-    height: auto;
-    margin-bottom: pxToRem(24);
-  }
+  // ─── Left content ──────────────────────────────────────────────
 
   &__title {
     margin: 0 0 pxToRem(12);
-    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    font-size: clamp(1.5rem, 4.5vw, 2.25rem);
     font-weight: 600;
     color: $color-neutral;
     line-height: 1.15;
   }
 
   &__description {
-    margin: 0 0 pxToRem(40);
-    max-width: pxToRem(360);
-    font-size: pxToRem(16);
-    line-height: 1.6;
+    margin: 0 0 pxToRem(20);
+    max-width: pxToRem(440);
+    font-size: pxToRem(15);
+    line-height: 1.7;
     color: $color-neutral;
     opacity: 0.6;
+  }
+
+  &__features {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(6);
+    margin-bottom: pxToRem(28);
+  }
+
+  &__feature {
+    font-size: pxToRem(13);
+    color: $color-neutral;
+    opacity: 0.55;
   }
 
   &__ctas {
@@ -48,5 +87,254 @@
     @include media-gtsm {
       flex-direction: row;
     }
+  }
+
+  // ─── Right content (preview) ───────────────────────────────────
+
+  &__hero-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__preview-card {
+    width: 100%;
+    max-width: pxToRem(560);
+    background: #fff;
+    border-radius: pxToRem(16);
+    padding: pxToRem(32);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  &__preview-header {
+    margin-bottom: pxToRem(24);
+  }
+
+  &__preview-badge {
+    font-size: pxToRem(11);
+    font-weight: 600;
+    color: $color-primary;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  &__preview-row {
+    display: flex;
+    gap: pxToRem(24);
+    align-items: flex-start;
+    margin-bottom: pxToRem(24);
+  }
+
+  &__preview-gauge {
+    position: relative;
+    width: pxToRem(90);
+    height: pxToRem(90);
+    flex-shrink: 0;
+  }
+
+  &__preview-gauge-ring {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  &__preview-gauge-bg {
+    fill: none;
+    stroke: rgba($color-neutral, 0.06);
+    stroke-width: 8;
+  }
+
+  &__preview-gauge-fill {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+  }
+
+  &__preview-gauge-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__preview-gauge-value {
+    font-size: pxToRem(20);
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, #F857C1, #C85AF4 50%, #7C3AED);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__preview-gauge-label {
+    font-size: pxToRem(9);
+    font-weight: 500;
+    color: $color-neutral;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: pxToRem(2);
+  }
+
+  &__preview-skills {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__preview-section {
+    margin-bottom: pxToRem(24);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__preview-recommend-row {
+    display: flex;
+    gap: pxToRem(24);
+    align-items: flex-start;
+
+    .home__preview-section {
+      flex: 1;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &__preview-section-title {
+    margin: 0 0 pxToRem(10);
+    font-size: pxToRem(13);
+    font-weight: 600;
+    color: $color-neutral;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.5;
+  }
+
+  &__preview-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: pxToRem(8);
+  }
+
+  &__preview-tag {
+    display: inline-flex;
+    padding: pxToRem(4) pxToRem(12);
+    border-radius: 999px;
+    font-size: pxToRem(12);
+    font-weight: 500;
+    color: $color-neutral;
+    background: rgba($color-neutral, 0.06);
+
+    &--gap {
+      color: rgba($color-neutral, 0.45);
+      background: rgba($color-neutral, 0.03);
+    }
+  }
+
+  &__preview-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(6);
+  }
+
+  &__preview-list-item {
+    position: relative;
+    padding-left: pxToRem(16);
+    font-size: pxToRem(13);
+    line-height: 1.5;
+    color: $color-neutral;
+    opacity: 0.7;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: pxToRem(7);
+      width: pxToRem(5);
+      height: pxToRem(5);
+      border-radius: 50%;
+      background: $color-primary;
+      opacity: 0.4;
+    }
+  }
+
+  &__preview-folder {
+    width: pxToRem(140);
+    height: pxToRem(140);
+    object-fit: contain;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: pxToRem(4);
+    opacity: 0.5;
+  }
+
+  // ─── How it works ─────────────────────────────────────────────
+
+  &__how {
+    padding: pxToRem(80) 0 pxToRem(60);
+  }
+
+  &__how-title {
+    margin: 0 0 pxToRem(48);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 600;
+    color: $color-neutral;
+    text-align: center;
+  }
+
+  &__steps {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(32);
+    max-width: pxToRem(900);
+    margin: 0 auto;
+
+    @include media-gtsm {
+      flex-direction: row;
+      gap: pxToRem(48);
+    }
+  }
+
+  &__step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__step-number {
+    font-size: pxToRem(40);
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, #F857C1, #C85AF4 50%, #7C3AED);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: pxToRem(16);
+  }
+
+  &__step-title {
+    margin: 0 0 pxToRem(8);
+    font-size: pxToRem(18);
+    font-weight: 600;
+    color: $color-neutral;
+  }
+
+  &__step-text {
+    margin: 0;
+    max-width: pxToRem(260);
+    font-size: pxToRem(14);
+    line-height: 1.6;
+    color: $color-neutral;
+    opacity: 0.55;
   }
 }

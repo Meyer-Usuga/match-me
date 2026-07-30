@@ -1,11 +1,108 @@
 <div class="home">
-  <main class="home__hero">
-    <img class="home__logo" src="/logo.png" alt="MatchMe" />
-    <h1 class="home__title">MatchMe</h1>
-    <p class="home__description">Analiza tu hoja de vida con el trabajo de tus sueños.</p>
-    <div class="home__ctas">
-      <app-button routerLink="/login">Inicia sesión</app-button>
-      <app-button variant="secondary" routerLink="/analizar">Prueba como invitado</app-button>
+  <app-navbar />
+
+  <section class="home__hero">
+    <div class="home__hero-content">
+      <div class="home__hero-left">
+        <h1 class="home__title">Encuentra tu match</h1>
+        <p class="home__description">
+          Compara tu perfil profesional con cualquier oferta laboral y descubre qué tan cerca estás
+          del trabajo de tus sueños. Obtené un análisis detallado con inteligencia artificial,
+          incluyendo match score, skills faltantes, y recomendaciones personalizadas para mejorar
+          tu candidatura.
+        </p>
+        <div class="home__features">
+          <span class="home__feature">✓ Análisis IA en segundos</span>
+          <span class="home__feature">✓ Recomendaciones accionables</span>
+          <span class="home__feature">✓ Sin registro necesario</span>
+        </div>
+        <div class="home__ctas">
+          <app-button routerLink="/login">Inicia sesión</app-button>
+          <app-button variant="secondary" routerLink="/analizar">Prueba como invitado</app-button>
+        </div>
+      </div>
+
+      <div class="home__hero-right">
+        <div class="home__preview-card">
+          <div class="home__preview-header">
+            <span class="home__preview-badge">Análisis de muestra</span>
+          </div>
+
+          <div class="home__preview-row">
+                <div class="home__preview-gauge">
+                  <svg class="home__preview-gauge-ring" viewBox="0 0 120 120">
+                    <defs>
+                      <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#F857C1" />
+                        <stop offset="50%" stop-color="#C85AF4" />
+                        <stop offset="100%" stop-color="#7C3AED" />
+                      </linearGradient>
+                    </defs>
+                    <circle class="home__preview-gauge-bg" cx="60" cy="60" r="52" />
+                    <circle class="home__preview-gauge-fill" cx="60" cy="60" r="52" stroke="url(#gaugeGrad)" stroke-dasharray="326.7" stroke-dashoffset="52.3" />
+                  </svg>
+                  <div class="home__preview-gauge-text">
+                    <span class="home__preview-gauge-value">84%</span>
+                    <span class="home__preview-gauge-label">Match</span>
+                  </div>
+                </div>
+
+                <div class="home__preview-skills">
+                  <h4 class="home__preview-section-title">Skills encontradas</h4>
+                  <div class="home__preview-tags">
+                    <span class="home__preview-tag">TypeScript</span>
+                    <span class="home__preview-tag">React</span>
+                    <span class="home__preview-tag">Node.js</span>
+                    <span class="home__preview-tag">PostgreSQL</span>
+                    <span class="home__preview-tag">Docker</span>
+                    <span class="home__preview-tag">AWS</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="home__preview-section">
+                <h4 class="home__preview-section-title">Brechas detectadas</h4>
+                <div class="home__preview-tags">
+                  <span class="home__preview-tag home__preview-tag--gap">Kubernetes</span>
+                  <span class="home__preview-tag home__preview-tag--gap">GraphQL</span>
+                  <span class="home__preview-tag home__preview-tag--gap">CI/CD avanzado</span>
+                </div>
+              </div>
+
+              <div class="home__preview-recommend-row">
+                <div class="home__preview-section">
+                  <h4 class="home__preview-section-title">Recomendaciones IA</h4>
+                  <ul class="home__preview-list">
+                    <li class="home__preview-list-item">Fortalecer experiencia en arquitectura cloud</li>
+                    <li class="home__preview-list-item">Añadir proyectos con testing automatizado</li>
+                    <li class="home__preview-list-item">Destacar logros cuantificables en tu rol actual</li>
+                  </ul>
+                </div>
+                <img class="home__preview-folder" src="/folder.png" alt="" />
+          </div>
+        </div>
+      </div>
     </div>
-  </main>
+
+    <div class="home__how">
+      <h2 class="home__how-title">¿Cómo funciona?</h2>
+      <div class="home__steps">
+        <div class="home__step">
+          <span class="home__step-number">01</span>
+          <h3 class="home__step-title">Sube tu hoja de vida</h3>
+          <p class="home__step-text">Carga tu CV en formato PDF o ingresa los datos manualmente.</p>
+        </div>
+        <div class="home__step">
+          <span class="home__step-number">02</span>
+          <h3 class="home__step-title">Agrega el trabajo</h3>
+          <p class="home__step-text">Pega el link de la oferta laboral que te interesa.</p>
+        </div>
+        <div class="home__step">
+          <span class="home__step-number">03</span>
+          <h3 class="home__step-title">Recibe el análisis</h3>
+          <p class="home__step-text">Obtén un match score y recomendaciones personalizadas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { Button } from 'app/shared';
+import { Button, Navbar } from 'app/shared';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, Button],
+  imports: [Button, Navbar],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

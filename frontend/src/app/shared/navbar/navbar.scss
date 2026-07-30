@@ -1,0 +1,65 @@
+@use '../../../styles/utils' as *;
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding: pxToRem(12) pxToRem(24);
+  background: $color-white;
+  border-bottom: 1px solid rgba($color-neutral, 0.06);
+  z-index: 100;
+
+  @include media-gtsm {
+    padding: pxToRem(12) pxToRem(48);
+  }
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: pxToRem(1100);
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: pxToRem(10);
+  }
+
+  &__logo {
+    width: pxToRem(40);
+    height: auto;
+  }
+
+  &__brand-text {
+    font-size: pxToRem(18);
+    font-weight: 700;
+    background: linear-gradient(135deg, #F857C1, #C85AF4 50%, #7C3AED);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__links {
+    display: flex;
+    gap: pxToRem(24);
+    align-items: center;
+  }
+
+  &__link {
+    font-size: pxToRem(14);
+    font-weight: 500;
+    color: $color-neutral;
+    opacity: 0.65;
+    text-decoration: none;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
