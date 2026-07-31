@@ -1,7 +1,7 @@
 import { TokenService } from "@/modules/auth/services/token.service";
 import { UserRepository } from "@/modules/users/repositories/user.repository";
 import { AppError } from "@/utils/errors/app-error";
-import { NextFunction, Request } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export class AuthMiddleware {
   constructor(
@@ -56,17 +56,27 @@ export class AuthMiddleware {
 
   public required = async (
     req: Request,
+    _res: Response,
     next: NextFunction,
   ): Promise<void> => {
-    await this.authenticate(req, true);
-    next();
+    try {
+      await this.authenticate(req, true);
+      next();
+    } catch (error) {
+      next(error);
+    }
   };
 
   public optional = async (
     req: Request,
+    _res: Response,
     next: NextFunction,
   ): Promise<void> => {
-    await this.authenticate(req, false);
-    next();
+    try {
+      await this.authenticate(req, false);
+      next();
+    } catch (error) {
+      next(error);
+    }
   };
 }
