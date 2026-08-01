@@ -36,5 +36,5 @@ export class AnalysisController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 }

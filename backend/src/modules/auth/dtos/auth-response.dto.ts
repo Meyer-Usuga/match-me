@@ -1,5 +1,5 @@
 export interface AuthResponseDto {
-    name: string;
-    email: string;
-    accessToken: string;
+  name: string;
+  email: string;
+  accessToken: string;
 }

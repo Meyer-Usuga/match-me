@@ -1,10 +1,6 @@
 import { UserRepository } from "@/modules/users/repositories/user.repository";
 import { AppError } from "@/utils/errors/app-error";
-import { 
-  AuthResponseDto, 
-  LoginUserDto, 
-  RegisterUserDto 
-} from "../dtos";
+import { AuthResponseDto, LoginUserDto, RegisterUserDto } from "../dtos";
 import bcrypt from "bcrypt";
 import { TokenService } from "./token.service";
 
@@ -22,27 +18,29 @@ export class AuthService {
     if (user) {
       throw new AppError({
         message: "Email already in use",
-        statusCode: 409
+        statusCode: 409,
       });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    await this.userRepository.create({
+    const createdUser = await this.userRepository.create({
       ...dto,
-      password: passwordHash
+      password: passwordHash,
     });
 
-    const accessToken = this.tokenService.generateToken({ userId: user.id })
+    const accessToken = this.tokenService.generateToken({
+      userId: createdUser.id,
+    });
 
     return {
-      name: dto.name,
-      email: dto.email,
+      name: createdUser.name,
+      email: createdUser.email,
       accessToken,
     };
   }
 
-  public async login(dto: LoginUserDto): Promise<AuthResponseDto>{
+  public async login(dto: LoginUserDto): Promise<AuthResponseDto> {
     const { email, password } = dto;
 
     const user = await this.userRepository.findByEmail(email);
@@ -50,7 +48,7 @@ export class AuthService {
     if (!user) {
       throw new AppError({
         message: "Invalid credentials",
-        statusCode: 401
+        statusCode: 401,
       });
     }
 
@@ -59,11 +57,11 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new AppError({
         message: "Invalid credentials",
-        statusCode: 401
+        statusCode: 401,
       });
     }
 
-    const accessToken = this.tokenService.generateToken({ userId: user.id })
+    const accessToken = this.tokenService.generateToken({ userId: user.id });
 
     return {
       name: user.name,
