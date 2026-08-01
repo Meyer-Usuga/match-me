@@ -56,8 +56,10 @@ export class GeminiService {
       return JSON.parse(result.text) as GeminiAnalysisResult;
       
     } catch (error) {
-      console.error(error);
-      throw error;
+      throw new AppError({
+        message: "Failed to generate content from Gemini",
+        statusCode: 500,
+      })
     }
   }
 }
