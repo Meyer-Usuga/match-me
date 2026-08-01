@@ -16,5 +16,29 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+    container_name: matchme-backend
+
+    restart: unless-stopped
+
+    ports:
+      - "3000:3000"
+
+    env_file:
+      - ./backend/.env.docker
+
+    depends_on:
+      - postgres
+
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+    command: sh -c "npx prisma generate && npm run dev"
+
 volumes:
   postgres_data:
