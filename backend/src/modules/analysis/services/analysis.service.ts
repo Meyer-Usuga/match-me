@@ -46,6 +46,16 @@ export class AnalysisService {
     });
     const aiResult = await this.geminiService.generate(prompt);
 
+    if (!dto.userId) {
+      return {
+        score: score.total,
+        matchedSkills: comparison.matchedSkills,
+        missingSkills: comparison.missingSkills,
+        aiResult: aiResult as unknown as Prisma.InputJsonValue,
+        status: AnalysisStatus.COMPLETED,
+      };
+    }
+
     const analysisData: CreateAnalysisData = {
       userId: dto.userId,
       company: dto.company,
