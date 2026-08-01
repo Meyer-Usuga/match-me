@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import { AnalysisController } from "@modules/analysis/controllers/analysis.controller";
 import { AnalysisService } from "@modules/analysis/services/analysis.service";
 import { AnalysisRepository } from "@modules/analysis/repositories/analysis.respository";
@@ -11,6 +10,8 @@ import { SkillExtractionService } from "@modules/analysis/services/skills-extrac
 import { SkillComparasionService } from "@modules/analysis/services/skills-comparasion.service";
 import { UserRepository } from "@/modules/users/repositories/user.repository";
 import { MulterMiddleware } from "@/middlewares/multer.middlware";
+import { GeminiService } from "@modules/analysis/services/gemini.service";
+import { PromptBuilderService } from "@modules/analysis/services/prompt-builder.service";
 
 const router = Router();
 
@@ -24,6 +25,10 @@ const skillExtractionService = new SkillExtractionService();
 
 const skillComparasionService = new SkillComparasionService();
 
+const geminiService = new GeminiService();
+
+const promptBuilderService = new PromptBuilderService();
+
 const userRepository = new UserRepository();
 
 const authMiddleware = new AuthMiddleware(tokenService, userRepository);
@@ -36,6 +41,8 @@ const analysisService = new AnalysisService(
   scoreService,
   skillExtractionService,
   skillComparasionService,
+  geminiService,
+  promptBuilderService,
 );
 
 const analysisController = new AnalysisController(analysisService);

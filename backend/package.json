@@ -9,6 +9,7 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@google/genai": "^2.15.0",
     "@prisma/client": "^6.19.3",
     "bcrypt": "^6.0.0",
     "express": "^5.1.0",
