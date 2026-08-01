@@ -3,18 +3,34 @@ import { CreateAnalysisDto } from "../dtos/create-analysis.dto";
 import { AnalysisRepository } from "../repositories/analysis.respository";
 import { CreateAnalysisData } from "../dtos/create-analysis.data";
 import { SkillExtractionService } from "./skills-extraction.service";
-import { PdfService } from "./pdf.service"; 
+import { SkillComparasionService } from "./skills-comparasion.service";
+import { PdfService } from "./pdf.service";
+import { ScoreService } from "./score.service";
 
 export class AnalysisService {
   constructor(
     private readonly analysisRepository: AnalysisRepository,
     private readonly pdfService: PdfService,
+    private readonly scoreService: ScoreService,
     private readonly skillExtractionService: SkillExtractionService,
+    private readonly skillComparasionService: SkillComparasionService,
   ) {}
 
   public async create(dto: CreateAnalysisDto) {
-    const cvText = await this.pdfService.extractText(dto.cvFile); 
-    const matchedSkills = this.skillExtractionService.extractSkills(cvText);
+    const cvText = await this.pdfService.extractText(dto.cvFile);
+    const cvSkills = this.skillExtractionService.extractSkills(cvText);
+    const jobSkills = this.skillExtractionService.extractSkills(
+      dto.jobDescription,
+    );
+    const comparison = this.skillComparasionService.compareSkills(
+      cvSkills,
+      jobSkills,
+    );
+    const score = this.scoreService.calculateScore(
+      jobSkills.length,
+      comparison.matchedSkills.length,
+      comparison.missingSkills.length,
+    );
 
     const analysisData: CreateAnalysisData = {
       userId: dto.userId,
@@ -22,11 +38,11 @@ export class AnalysisService {
       jobTitle: dto.jobTitle,
       jobDescription: dto.jobDescription,
       cvText,
-      score: 0,
-      matchedSkills,
-      missingSkills: [],
+      score: score.total,
+      matchedSkills: comparison.matchedSkills,
+      missingSkills: comparison.missingSkills,
       aiResult: {},
-      status: AnalysisStatus.PENDING,
+      status: AnalysisStatus.COMPLETED,
       errorMessage: undefined,
     };
 

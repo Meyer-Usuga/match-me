@@ -6,7 +6,9 @@ import { AnalysisRepository } from "@modules/analysis/repositories/analysis.resp
 import { AuthMiddleware } from "@/middlewares/auth.middleware";
 import { TokenService } from "@/modules/auth/services/token.service";
 import { PdfService } from "@modules/analysis/services/pdf.service";
+import { ScoreService } from "@modules/analysis/services/score.service";
 import { SkillExtractionService } from "@modules/analysis/services/skills-extraction.service";
+import { SkillComparasionService } from "@modules/analysis/services/skills-comparasion.service";
 import { UserRepository } from "@/modules/users/repositories/user.repository";
 import { MulterMiddleware } from "@/middlewares/multer.middlware";
 
@@ -16,7 +18,11 @@ const tokenService = new TokenService();
 
 const pdfService = new PdfService();
 
+const scoreService = new ScoreService();
+
 const skillExtractionService = new SkillExtractionService();
+
+const skillComparasionService = new SkillComparasionService();
 
 const userRepository = new UserRepository();
 
@@ -27,7 +33,9 @@ const analysisRepository = new AnalysisRepository();
 const analysisService = new AnalysisService(
   analysisRepository,
   pdfService,
+  scoreService,
   skillExtractionService,
+  skillComparasionService,
 );
 
 const analysisController = new AnalysisController(analysisService);
