@@ -1,1 +1,133 @@
-<p>analysis works!</p>
+<div class="analysis">
+  <app-navbar />
+
+  <section class="analysis__hero">
+    <div class="analysis__hero-content">
+      <h1 class="analysis__title">Prueba como invitado</h1>
+      <p class="analysis__subtitle">Analiza tu perfil y una oferta laboral</p>
+      <p class="analysis__description">
+        Sube tu hoja de vida en PDF y pega la descripción de la oferta. Obtendrás un análisis
+        instantáneo de compatibilidad.
+      </p>
+    </div>
+  </section>
+
+  <section class="analysis__stepper">
+    <div class="analysis__stepper-step">
+      <span class="analysis__stepper-number">1</span>
+      <div class="analysis__stepper-text">
+        <h3 class="analysis__stepper-title">Tu perfil</h3>
+        <p class="analysis__stepper-subtitle">Sube tu CV en PDF</p>
+      </div>
+    </div>
+    <div class="analysis__stepper-line"></div>
+    <div class="analysis__stepper-step">
+      <span class="analysis__stepper-number">2</span>
+      <div class="analysis__stepper-text">
+        <h3 class="analysis__stepper-title">Oferta laboral</h3>
+        <p class="analysis__stepper-subtitle">Pega la descripción</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="analysis__cards">
+    <div class="analysis__card">
+      <h4 class="analysis__card-title">Tu perfil</h4>
+      <label class="analysis__upload">
+        <input
+          class="analysis__upload-input"
+          type="file"
+          accept="application/pdf"
+          (change)="onFileSelected($event)"
+        />
+        @if (fileName()) {
+          <div class="analysis__upload-content">
+            <span class="analysis__upload-file">{{ fileName() }}</span>
+            <span class="analysis__upload-hint">Haz clic para cambiar el archivo</span>
+          </div>
+        } @else {
+          <div class="analysis__upload-content">
+            <svg
+              class="analysis__upload-icon"
+              width="40"
+              height="40"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            <span class="analysis__upload-text">Sube tu CV en PDF</span>
+            <span class="analysis__upload-hint">Haz clic o arrastra tu archivo aquí</span>
+          </div>
+        }
+      </label>
+    </div>
+
+    <div class="analysis__card">
+      <h4 class="analysis__card-title">Oferta laboral</h4>
+      <app-input
+        id="job-description"
+        label="Descripción de la oferta"
+        type="textarea"
+        placeholder="Pega aquí la descripción de la oferta laboral..."
+      />
+    </div>
+  </section>
+
+  <div class="analysis__cta">
+    <div class="analysis__cta-inner">
+      <app-button [full]="true">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          stroke="none"
+        >
+          <path
+            d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z"
+          />
+        </svg>
+        Analizar compatibilidad
+      </app-button>
+      <p class="analysis__note">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        Tus datos no se almacenan, esta es una prueba como invitado
+      </p>
+    </div>
+  </div>
+
+  <a class="analysis__back" routerLink="/home">
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+    Volver a inicio
+  </a>
+</div>

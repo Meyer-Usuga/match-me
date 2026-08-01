@@ -9,8 +9,9 @@ import { Component, input } from '@angular/core';
 export class Input {
   readonly id = input.required<string>();
   readonly label = input.required<string>();
-  readonly type = input<'text' | 'email' | 'password'>('text');
+  readonly type = input<'text' | 'email' | 'password' | 'textarea'>('text');
   readonly placeholder = input('');
   readonly autocomplete = input<string | undefined>(undefined);
   readonly error = input<string | undefined>(undefined);
+  readonly rows = input(5);
 }

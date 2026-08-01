@@ -23,6 +23,12 @@
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
 
+    &--textarea {
+      resize: vertical;
+      min-height: pxToRem(120);
+      line-height: 1.5;
+    }
+
     &::placeholder {
       color: rgba($color-neutral, 0.35);
     }
