@@ -142,6 +142,12 @@
         />
       </div>
     }
+
+    @if (activeStep() === 4) {
+      <div class="analysis__results">
+        <app-result-card [score]="84" />
+      </div>
+    }
   </section>
 
   <div class="analysis__cta">
@@ -155,7 +161,7 @@
           <app-button variant="secondary" (click)="previous()">Anterior</app-button>
           <app-button (click)="next()">Siguiente</app-button>
         </div>
-      } @else {
+      } @else if (activeStep() === 3) {
         <div class="analysis__cta-row">
           <app-button variant="secondary" (click)="previous()">Anterior</app-button>
           <app-button (click)="onSubmit()">
@@ -164,6 +170,11 @@
             </svg>
             Analizar compatibilidad
           </app-button>
+        </div>
+      } @else {
+        <div class="analysis__cta-row">
+          <app-button variant="secondary" routerLink="/home">Volver a inicio</app-button>
+          <app-button (click)="reset()">Nuevo análisis</app-button>
         </div>
       }
       <p class="analysis__note">
@@ -180,24 +191,8 @@
           <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
         </svg>
-        Tus datos no se almacenan, esta es una prueba como invitado
+        Tus datos no se almacenan, esta es una prueba como invitado.
       </p>
     </div>
   </div>
-
-  <a class="analysis__back" routerLink="/home">
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <polyline points="15 18 9 12 15 6" />
-    </svg>
-    Volver a inicio
-  </a>
 </div>

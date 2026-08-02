@@ -2,11 +2,11 @@ import { Component, computed, signal } from '@angular/core';
 import { form, required, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { CreateAnalysisRequest } from '@core';
-import { Button, Input, Navbar, Stepper, StepperStep } from 'app/shared';
+import { Button, Input, Navbar, ResultCard, Stepper, StepperStep } from 'app/shared';
 
 @Component({
   selector: 'app-analysis',
-  imports: [Button, Input, Navbar, Stepper, RouterLink],
+  imports: [Button, Input, Navbar, ResultCard, Stepper, RouterLink],
   templateUrl: './analysis.html',
   styleUrl: './analysis.scss',
 })
@@ -15,14 +15,17 @@ export class Analysis {
     { title: 'Tu perfil', subtitle: 'Sube tu CV en PDF' },
     { title: 'Datos de la oferta', subtitle: 'Empresa y puesto' },
     { title: 'Descripción', subtitle: 'Pega la oferta laboral' },
+    { title: 'Resultados', subtitle: 'Análisis de compatibilidad' },
   ];
 
-  readonly request = signal<CreateAnalysisRequest>({
+  readonly initialRequest: CreateAnalysisRequest = {
     company: '',
     jobTitle: '',
     jobDescription: '',
     cvFile: null,
-  });
+  };
+
+  readonly request = signal<CreateAnalysisRequest>({ ...this.initialRequest });
 
   readonly schema = schema<CreateAnalysisRequest>((a) => {
     required(a.company);
@@ -107,7 +110,12 @@ export class Analysis {
       return;
     }
 
-    const request = this.request();
-    console.log(request);
+    this.activeStep.set(4);
+  }
+
+  reset() {
+    this.request.set({ ...this.initialRequest });
+    this.createAnalysisForm().reset();
+    this.activeStep.set(1);
   }
 }

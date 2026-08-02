@@ -1,0 +1,66 @@
+<div class="result-card">
+  <div class="result-card__header">
+    <span class="result-card__badge">Análisis de muestra</span>
+  </div>
+
+  <div class="result-card__row">
+    <div class="result-card__gauge">
+      <svg class="result-card__gauge-ring" viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F857C1" />
+            <stop offset="50%" stop-color="#C85AF4" />
+            <stop offset="100%" stop-color="#7C3AED" />
+          </linearGradient>
+        </defs>
+        <circle class="result-card__gauge-bg" cx="60" cy="60" r="52" />
+        <circle
+          class="result-card__gauge-fill"
+          cx="60"
+          cy="60"
+          r="52"
+          stroke="url(#gaugeGrad)"
+          stroke-dasharray="326.7"
+          [attr.stroke-dashoffset]="gaugeOffset()"
+        />
+      </svg>
+      <div class="result-card__gauge-text">
+        <span class="result-card__gauge-value">{{ score() }}%</span>
+        <span class="result-card__gauge-label">Match</span>
+      </div>
+    </div>
+
+    <div class="result-card__skills">
+      <h4 class="result-card__section-title">Skills encontradas</h4>
+      <div class="result-card__tags">
+        <span class="result-card__tag">TypeScript</span>
+        <span class="result-card__tag">React</span>
+        <span class="result-card__tag">Node.js</span>
+        <span class="result-card__tag">PostgreSQL</span>
+        <span class="result-card__tag">Docker</span>
+        <span class="result-card__tag">AWS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-card__section">
+    <h4 class="result-card__section-title">Brechas detectadas</h4>
+    <div class="result-card__tags">
+      <span class="result-card__tag result-card__tag--gap">Kubernetes</span>
+      <span class="result-card__tag result-card__tag--gap">GraphQL</span>
+      <span class="result-card__tag result-card__tag--gap">CI/CD avanzado</span>
+    </div>
+  </div>
+
+  <div class="result-card__recommend-row">
+    <div class="result-card__section">
+      <h4 class="result-card__section-title">Recomendaciones IA</h4>
+      <ul class="result-card__list">
+        <li class="result-card__list-item">Fortalecer experiencia en arquitectura cloud</li>
+        <li class="result-card__list-item">Añadir proyectos con testing automatizado</li>
+        <li class="result-card__list-item">Destacar logros cuantificables en tu rol actual</li>
+      </ul>
+    </div>
+    <img class="result-card__folder" src="/folder.png" alt="" />
+  </div>
+</div>
