@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, model } from '@angular/core';
 
 @Component({
   selector: 'app-input',
@@ -14,4 +14,9 @@ export class Input {
   readonly autocomplete = input<string | undefined>(undefined);
   readonly error = input<string | undefined>(undefined);
   readonly rows = input(5);
+  readonly value = model('');
+
+  onInput(event: Event) {
+    this.value.set((event.target as HTMLInputElement | HTMLTextAreaElement).value);
+  }
 }

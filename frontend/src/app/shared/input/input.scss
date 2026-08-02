@@ -29,6 +29,15 @@
       line-height: 1.5;
     }
 
+    &--error {
+      border-color: #e74c5e;
+
+      &:focus {
+        border-color: #e74c5e;
+        box-shadow: 0 0 0 3px rgba(231, 76, 94, 0.1);
+      }
+    }
+
     &::placeholder {
       color: rgba($color-neutral, 0.35);
     }
@@ -37,10 +46,6 @@
       border-color: $color-primary;
       box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
       background: $color-white;
-    }
-
-    &.ng-invalid.ng-touched {
-      border-color: #e74c5e;
     }
   }
 

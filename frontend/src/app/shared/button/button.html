@@ -1,3 +1,9 @@
-<button class="btn" [class.btn--secondary]="variant() === 'secondary'" [class.btn--full]="full()">
+<button
+  type="button"
+  class="btn"
+  [disabled]="disabled()"
+  [class.btn--secondary]="variant() === 'secondary'"
+  [class.btn--full]="full()"
+>
   <ng-content />
 </button>

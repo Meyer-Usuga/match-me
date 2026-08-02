@@ -16,6 +16,7 @@
     "module": "preserve",
     "baseUrl": "src",
     "paths": {
+      "@core": ["app/core/index.ts"],
       "@pages": ["app/pages/index.ts"],
     }
   },

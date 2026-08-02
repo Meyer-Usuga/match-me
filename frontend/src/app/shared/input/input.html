@@ -3,17 +3,23 @@
   @if (type() === 'textarea') {
     <textarea
       class="input__control input__control--textarea"
+      [class.input__control--error]="!!error()"
       [id]="id()"
       [rows]="rows()"
       [placeholder]="placeholder()"
+      [value]="value()"
+      (input)="onInput($event)"
     ></textarea>
   } @else {
     <input
       class="input__control"
+      [class.input__control--error]="!!error()"
       [id]="id()"
       [type]="type()"
       [placeholder]="placeholder()"
       [attr.autocomplete]="autocomplete()"
+      [value]="value()"
+      (input)="onInput($event)"
     />
   }
   @if (error()) {
