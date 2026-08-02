@@ -1,3 +1,5 @@
 export { Button } from './button/button';
 export { Input } from './input/input';
 export { Navbar } from './navbar/navbar';
+export { Stepper } from './stepper/stepper';
+export type { StepperStep } from './stepper/stepper';

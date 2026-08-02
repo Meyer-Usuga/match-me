@@ -12,46 +12,10 @@
     </div>
   </section>
 
-  <section class="analysis__stepper">
-    <div
-      class="analysis__stepper-step"
-      [class.analysis__stepper-step--active]="isActive(1)"
-      [class.analysis__stepper-step--completed]="isCompleted(1)"
-    >
-      <span class="analysis__stepper-number">1</span>
-      <div class="analysis__stepper-text">
-        <h3 class="analysis__stepper-title">Tu perfil</h3>
-        <p class="analysis__stepper-subtitle">Sube tu CV en PDF</p>
-      </div>
-    </div>
-    <div class="analysis__stepper-line" [class.analysis__stepper-line--completed]="isCompleted(1)"></div>
-    <div
-      class="analysis__stepper-step"
-      [class.analysis__stepper-step--active]="isActive(2)"
-      [class.analysis__stepper-step--completed]="isCompleted(2)"
-    >
-      <span class="analysis__stepper-number">2</span>
-      <div class="analysis__stepper-text">
-        <h3 class="analysis__stepper-title">Datos de la oferta</h3>
-        <p class="analysis__stepper-subtitle">Empresa y puesto</p>
-      </div>
-    </div>
-    <div class="analysis__stepper-line" [class.analysis__stepper-line--completed]="isCompleted(2)"></div>
-    <div
-      class="analysis__stepper-step"
-      [class.analysis__stepper-step--active]="isActive(3)"
-      [class.analysis__stepper-step--completed]="isCompleted(3)"
-    >
-      <span class="analysis__stepper-number">3</span>
-      <div class="analysis__stepper-text">
-        <h3 class="analysis__stepper-title">Descripción</h3>
-        <p class="analysis__stepper-subtitle">Pega la oferta laboral</p>
-      </div>
-    </div>
-  </section>
+  <app-stepper [steps]="steps" [activeStep]="activeStep()" />
 
   <section class="analysis__cards">
-    @if (isActive(1)) {
+    @if (activeStep() === 1) {
       <div class="analysis__card">
         <h4 class="analysis__card-title">Tu perfil</h4>
         <label class="analysis__upload" [class.analysis__upload--error]="isInvalid('cvFile')">
@@ -94,7 +58,7 @@
       </div>
     }
 
-    @if (isActive(2)) {
+    @if (activeStep() === 2) {
       <div class="analysis__card">
         <h4 class="analysis__card-title">Datos de la oferta</h4>
         <div class="analysis__cv-summary">
@@ -141,7 +105,7 @@
       </div>
     }
 
-    @if (isActive(3)) {
+    @if (activeStep() === 3) {
       <div class="analysis__card">
         <h4 class="analysis__card-title">Descripción de la oferta</h4>
         <div class="analysis__cv-summary">
@@ -182,11 +146,11 @@
 
   <div class="analysis__cta">
     <div class="analysis__cta-inner">
-      @if (isActive(1)) {
+      @if (activeStep() === 1) {
         <app-button [full]="true" [disabled]="!fileName()" (click)="next()">
           Siguiente
         </app-button>
-      } @else if (isActive(2)) {
+      } @else if (activeStep() === 2) {
         <div class="analysis__cta-row">
           <app-button variant="secondary" (click)="previous()">Anterior</app-button>
           <app-button (click)="next()">Siguiente</app-button>

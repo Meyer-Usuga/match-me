@@ -1,0 +1,21 @@
+<div class="stepper">
+  @for (step of steps(); track $index) {
+    @if (!$first) {
+      <div
+        class="stepper__line"
+        [class.stepper__line--completed]="isCompleted($index - 1)"
+      ></div>
+    }
+    <div
+      class="stepper__step"
+      [class.stepper__step--active]="isActive($index)"
+      [class.stepper__step--completed]="isCompleted($index)"
+    >
+      <span class="stepper__number">{{ $index + 1 }}</span>
+      <div class="stepper__text">
+        <h3 class="stepper__title">{{ step.title }}</h3>
+        <p class="stepper__subtitle">{{ step.subtitle }}</p>
+      </div>
+    </div>
+  }
+</div>

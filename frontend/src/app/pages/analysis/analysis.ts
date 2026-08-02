@@ -2,15 +2,21 @@ import { Component, computed, signal } from '@angular/core';
 import { form, required, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { CreateAnalysisRequest } from '@core';
-import { Button, Input, Navbar } from 'app/shared';
+import { Button, Input, Navbar, Stepper, StepperStep } from 'app/shared';
 
 @Component({
   selector: 'app-analysis',
-  imports: [Button, Input, Navbar, RouterLink],
+  imports: [Button, Input, Navbar, Stepper, RouterLink],
   templateUrl: './analysis.html',
   styleUrl: './analysis.scss',
 })
 export class Analysis {
+  readonly steps: StepperStep[] = [
+    { title: 'Tu perfil', subtitle: 'Sube tu CV en PDF' },
+    { title: 'Datos de la oferta', subtitle: 'Empresa y puesto' },
+    { title: 'Descripción', subtitle: 'Pega la oferta laboral' },
+  ];
+
   readonly request = signal<CreateAnalysisRequest>({
     company: '',
     jobTitle: '',
@@ -30,14 +36,6 @@ export class Analysis {
   readonly activeStep = signal(1);
 
   readonly fileName = computed(() => this.request().cvFile?.name ?? null);
-
-  isActive(step: number) {
-    return this.activeStep() === step;
-  }
-
-  isCompleted(step: number) {
-    return this.activeStep() > step;
-  }
 
   isInvalid(field: keyof CreateAnalysisRequest) {
     const state = this.createAnalysisForm[field]();
