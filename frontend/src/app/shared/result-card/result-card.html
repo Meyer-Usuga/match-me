@@ -1,9 +1,59 @@
 <div class="result-card">
   <div class="result-card__header">
-    <span class="result-card__badge">Análisis de muestra</span>
+    <span class="result-card__badge">
+      @if (company() && jobTitle()) {
+        Resultado del análisis
+      } @else {
+        Análisis de muestra
+      }
+    </span>
   </div>
 
-  <div class="result-card__row">
+  <div class="result-card__top">
+    <div class="result-card__skills">
+      @if (company() && jobTitle()) {
+        <div class="result-card__job">
+          <div class="result-card__job-item">
+            <span class="result-card__job-label">Empresa</span>
+            <span class="result-card__job-value">{{ company() }}</span>
+          </div>
+          <div class="result-card__job-item">
+            <span class="result-card__job-label">Puesto</span>
+            <span class="result-card__job-value">{{ jobTitle() }}</span>
+          </div>
+        </div>
+      }
+      <h4 class="result-card__section-title">Skills encontradas</h4>
+      <p class="result-card__section-desc">
+        Estas fueron las habilidades que coinciden entre tu perfil y la oferta.
+      </p>
+      @if (matchedSkills().length > 0) {
+        <div class="result-card__tags">
+          @for (skill of matchedSkills(); track skill) {
+            <span class="result-card__tag">{{ skill }}</span>
+          }
+        </div>
+      } @else {
+        <span class="result-card__empty">No se detectaron skills</span>
+      }
+
+      <div class="result-card__section result-card__section--inline">
+        <h4 class="result-card__section-title">Brechas detectadas</h4>
+        <p class="result-card__section-desc">
+          Habilidades de la oferta que aún faltan en tu perfil.
+        </p>
+        @if (missingSkills().length > 0) {
+          <div class="result-card__tags">
+            @for (skill of missingSkills(); track skill) {
+              <span class="result-card__tag">{{ skill }}</span>
+            }
+          </div>
+        } @else {
+          <span class="result-card__empty">Sin brechas detectadas</span>
+        }
+      </div>
+    </div>
+
     <div class="result-card__gauge">
       <svg class="result-card__gauge-ring" viewBox="0 0 120 120">
         <defs>
@@ -29,37 +79,89 @@
         <span class="result-card__gauge-label">Match</span>
       </div>
     </div>
-
-    <div class="result-card__skills">
-      <h4 class="result-card__section-title">Skills encontradas</h4>
-      <div class="result-card__tags">
-        <span class="result-card__tag">TypeScript</span>
-        <span class="result-card__tag">React</span>
-        <span class="result-card__tag">Node.js</span>
-        <span class="result-card__tag">PostgreSQL</span>
-        <span class="result-card__tag">Docker</span>
-        <span class="result-card__tag">AWS</span>
-      </div>
-    </div>
   </div>
 
   <div class="result-card__section">
-    <h4 class="result-card__section-title">Brechas detectadas</h4>
-    <div class="result-card__tags">
-      <span class="result-card__tag result-card__tag--gap">Kubernetes</span>
-      <span class="result-card__tag result-card__tag--gap">GraphQL</span>
-      <span class="result-card__tag result-card__tag--gap">CI/CD avanzado</span>
-    </div>
+    <h4 class="result-card__section-title">Resumen</h4>
+    @if (aiResult().summary) {
+      <p class="result-card__summary">{{ aiResult().summary }}</p>
+    } @else {
+      <span class="result-card__empty">Sin resumen disponible</span>
+    }
+  </div>
+
+  <div class="result-card__section">
+    <h4 class="result-card__section-title">Fortalezas</h4>
+    @if (aiResult().strengths.length > 0) {
+      <ul class="result-card__feature-list">
+        @for (strength of aiResult().strengths; track strength) {
+          <li class="result-card__feature">
+            <svg
+              class="result-card__feature-icon"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>{{ strength }}</span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <span class="result-card__empty">Sin fortalezas detectadas</span>
+    }
+  </div>
+
+  <div class="result-card__section">
+    <h4 class="result-card__section-title">Debilidades</h4>
+    @if (aiResult().weaknesses.length > 0) {
+      <ul class="result-card__feature-list">
+        @for (weakness of aiResult().weaknesses; track weakness) {
+          <li class="result-card__feature">
+            <svg
+              class="result-card__feature-icon result-card__feature-icon--weak"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+            <span>{{ weakness }}</span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <span class="result-card__empty">Sin debilidades detectadas</span>
+    }
   </div>
 
   <div class="result-card__recommend-row">
     <div class="result-card__section">
       <h4 class="result-card__section-title">Recomendaciones IA</h4>
-      <ul class="result-card__list">
-        <li class="result-card__list-item">Fortalecer experiencia en arquitectura cloud</li>
-        <li class="result-card__list-item">Añadir proyectos con testing automatizado</li>
-        <li class="result-card__list-item">Destacar logros cuantificables en tu rol actual</li>
-      </ul>
+      <p class="result-card__section-desc">
+        Sugerencias de la IA para mejorar tu candidatura.
+      </p>
+      @if (aiResult().recommendations.length > 0) {
+        <ul class="result-card__list">
+          @for (rec of aiResult().recommendations; track rec) {
+            <li class="result-card__list-item">{{ rec }}</li>
+          }
+        </ul>
+      } @else {
+        <span class="result-card__empty">Sin recomendaciones</span>
+      }
     </div>
     <img class="result-card__folder" src="/folder.png" alt="" />
   </div>

@@ -1,8 +1,18 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { form, required, schema } from '@angular/forms/signals';
+import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
+import { form, maxLength, minLength, required, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
-import { AnalysisService, CreateAnalysisRequest, CreatedAnalysisResponse } from '@core';
+import { AiResult, AnalysisService, CreateAnalysisRequest, CreatedAnalysisResponse } from '@core';
 import { Button, Input, Navbar, ResultCard, Stepper, StepperStep } from 'app/shared';
+
+const EMPTY_AI_RESULT: AiResult = {
+  summary: '',
+  strengths: [],
+  weaknesses: [],
+  recommendations: [],
+  improvementPriority: [],
+};
+
+const PROGRESS_STEP_MS = 1800;
 
 @Component({
   selector: 'app-analysis',
@@ -10,10 +20,21 @@ import { Button, Input, Navbar, ResultCard, Stepper, StepperStep } from 'app/sha
   templateUrl: './analysis.html',
   styleUrl: './analysis.scss',
 })
-export class Analysis {
+export class Analysis implements OnDestroy {
   readonly analysisService = inject(AnalysisService);
   readonly result = signal<CreatedAnalysisResponse | null>(null);
   readonly analyzing = signal<boolean>(false);
+
+  readonly progressSteps = [
+    'Extrayendo skills',
+    'Comparando skills',
+    'Calculando match',
+    'Recomendaciones',
+    'Generando resultados',
+  ];
+  readonly progressStep = signal(0);
+
+  private progressTimer: ReturnType<typeof setInterval> | null = null;
 
   readonly steps: StepperStep[] = [
     { title: 'Tu perfil', subtitle: 'Sube tu CV en PDF' },
@@ -35,6 +56,8 @@ export class Analysis {
     required(a.company);
     required(a.jobTitle);
     required(a.jobDescription);
+    minLength(a.jobDescription, 500);
+    maxLength(a.jobDescription, 2000);
     required(a.cvFile);
   });
 
@@ -108,29 +131,54 @@ export class Analysis {
     this.activeStep.set(step);
   }
 
-  async onSubmit() {
+  onSubmit() {
     if (!this.createAnalysisForm().valid()) {
       this.createAnalysisForm().markAsTouched();
       return;
     }
 
     this.analyzing.set(true);
+    this.startProgress();
 
     this.analysisService.createAnalysis(this.request()).subscribe({
       next: (analysis) => {
-        this.result.set(analysis);
-
-        console.log(analysis);
-        
+        this.stopProgress();
+        this.result.set({
+          ...analysis,
+          company: analysis.company ?? this.request().company,
+          jobTitle: analysis.jobTitle ?? this.request().jobTitle,
+          score: analysis.score ?? 0,
+          matchedSkills: analysis.matchedSkills ?? [],
+          missingSkills: analysis.missingSkills ?? [],
+          aiResult: analysis.aiResult ?? EMPTY_AI_RESULT,
+        });
+        this.analyzing.set(false);
         this.activeStep.set(4);
       },
       error: (error) => {
         console.error(error);
-      },
-      complete: () => {
+        this.stopProgress();
         this.analyzing.set(false);
       },
     });
+  }
+
+  private startProgress() {
+    this.progressStep.set(0);
+    this.progressTimer = setInterval(() => {
+      this.progressStep.update((step) => Math.min(step + 1, this.progressSteps.length - 1));
+    }, PROGRESS_STEP_MS);
+  }
+
+  private stopProgress() {
+    if (this.progressTimer) {
+      clearInterval(this.progressTimer);
+      this.progressTimer = null;
+    }
+  }
+
+  ngOnDestroy() {
+    this.stopProgress();
   }
 
   reset() {

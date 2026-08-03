@@ -5,6 +5,14 @@ export interface CreateAnalysisRequest {
   cvFile: File | null;
 }
 
+export interface AiResult {
+  summary: string;
+  strengths: string[];
+  weaknesses: string[];
+  recommendations: string[];
+  improvementPriority: string[];
+}
+
 export interface CreatedAnalysisResponse {
   userId?: string;
   company?: string;
@@ -14,7 +22,7 @@ export interface CreatedAnalysisResponse {
   score: number;
   matchedSkills: string[];
   missingSkills: string[];
-  aiResult: string[];
+  aiResult: AiResult;
   status: string;
   errorMessage?: string;
 }

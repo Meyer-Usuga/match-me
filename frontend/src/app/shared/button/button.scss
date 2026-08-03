@@ -4,6 +4,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   gap: pxToRem(8);
   padding: pxToRem(12) pxToRem(32);
   border: 1px solid transparent;

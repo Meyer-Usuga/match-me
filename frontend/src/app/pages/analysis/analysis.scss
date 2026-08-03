@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  padding-bottom: pxToRem(96);
   background: $color-white;
 
   &__hero {
@@ -102,7 +101,29 @@
 
   &__results {
     display: flex;
-    justify-content: center;
+    width: 100%;
+
+    app-result-card {
+      flex: 1 0 100%;
+    }
+  }
+
+  &__button-icon {
+    flex-shrink: 0;
+  }
+
+  &__spinner {
+    animation: analysis-spin 0.9s linear infinite;
+  }
+
+  @keyframes analysis-spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   &__upload {
@@ -216,23 +237,28 @@
     color: $color-primary;
     cursor: pointer;
 
-    &:hover {
+    &:hover:not(:disabled) {
       text-decoration: underline;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
   }
 
   &__cta {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 80;
     display: flex;
     justify-content: center;
-    padding: pxToRem(16) pxToRem(24) pxToRem(16);
-    background: rgba($color-white, 0.94);
-    backdrop-filter: blur(8px);
-    border-top: 1px solid rgba($color-neutral, 0.08);
+    width: 100%;
+    max-width: pxToRem(800);
+    margin: 0 auto;
+    padding: 0 pxToRem(24) pxToRem(40);
+    box-sizing: border-box;
+
+    @include media-gtsm {
+      padding: 0 pxToRem(48) pxToRem(48);
+    }
   }
 
   &__cta-inner {
@@ -247,6 +273,7 @@
   &__cta-row {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: pxToRem(12);
     width: 100%;
   }

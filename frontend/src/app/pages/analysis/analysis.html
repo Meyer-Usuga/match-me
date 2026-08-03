@@ -80,7 +80,7 @@
             <span class="analysis__cv-name">{{ fileName() }}</span>
             <span class="analysis__cv-hint">CV cargado</span>
           </div>
-          <button type="button" class="analysis__cv-change" (click)="goToStep(1)">
+          <button type="button" class="analysis__cv-change" [disabled]="analyzing()" (click)="goToStep(1)">
             Cambiar
           </button>
         </div>
@@ -127,7 +127,7 @@
             <span class="analysis__cv-name">{{ fileName() }}</span>
             <span class="analysis__cv-hint">CV cargado</span>
           </div>
-          <button type="button" class="analysis__cv-change" (click)="goToStep(1)">
+          <button type="button" class="analysis__cv-change" [disabled]="analyzing()" (click)="goToStep(1)">
             Cambiar
           </button>
         </div>
@@ -138,14 +138,23 @@
           placeholder="Pega aquí la descripción de la oferta laboral..."
           [value]="request().jobDescription"
           (valueChange)="onJobDescriptionChange($event)"
-          [error]="isInvalid('jobDescription') ? 'Pega la descripción de la oferta' : undefined"
+          [error]="isInvalid('jobDescription') ? 'Mínimo 500 y máximo 2000 caracteres' : undefined"
         />
       </div>
     }
 
     @if (activeStep() === 4) {
       <div class="analysis__results">
-        <app-result-card [score]="84" />
+        @if (result(); as analysis) {
+          <app-result-card
+            [score]="analysis.score"
+            [company]="analysis.company"
+            [jobTitle]="analysis.jobTitle"
+            [matchedSkills]="analysis.matchedSkills"
+            [missingSkills]="analysis.missingSkills"
+            [aiResult]="analysis.aiResult"
+          />
+        }
       </div>
     }
   </section>
@@ -165,16 +174,18 @@
         <div class="analysis__cta-row">
           <app-button variant="secondary" (click)="previous()">Anterior</app-button>
           <app-button (click)="onSubmit()" [disabled]="analyzing()">
-            @if (analyzing()) {
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" />
-              </svg>
-            } @else {
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" />
-              </svg>
-            }
-            Analizar compatibilidad
+            <svg
+              class="analysis__button-icon"
+              [class.analysis__spinner]="analyzing()"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              stroke="none"
+            >
+              <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" />
+            </svg>
+            {{ analyzing() ? progressSteps[progressStep()] + '…' : 'Analizar compatibilidad' }}
           </app-button>
         </div>
       } @else {
