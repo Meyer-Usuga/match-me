@@ -164,10 +164,16 @@
       } @else if (activeStep() === 3) {
         <div class="analysis__cta-row">
           <app-button variant="secondary" (click)="previous()">Anterior</app-button>
-          <app-button (click)="onSubmit()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-              <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" />
-            </svg>
+          <app-button (click)="onSubmit()" [disabled]="analyzing()">
+            @if (analyzing()) {
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" />
+              </svg>
+            } @else {
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" />
+              </svg>
+            }
             Analizar compatibilidad
           </app-button>
         </div>

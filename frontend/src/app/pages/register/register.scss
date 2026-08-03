@@ -1,0 +1,114 @@
+@use '../../../styles/utils' as *;
+
+.register {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-top: pxToRem(80);
+  box-sizing: border-box;
+  background: $color-white;
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__content {
+    width: 100%;
+    max-width: pxToRem(620);
+    margin: auto;
+    padding: pxToRem(32) pxToRem(24);
+    box-sizing: border-box;
+  }
+
+  &__hero {
+    padding-bottom: pxToRem(24);
+    text-align: center;
+  }
+
+  &__hero-content {
+    max-width: pxToRem(620);
+    margin: 0 auto;
+  }
+
+  &__title {
+    margin: 0 0 pxToRem(8);
+    font-size: clamp(1.5rem, 4.5vw, 2.25rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #f857c1, #c85af4 50%, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-size: pxToRem(18);
+    font-weight: 600;
+    color: $color-neutral;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(20);
+    width: 100%;
+    max-width: pxToRem(460);
+    margin: 0 auto;
+    padding: pxToRem(32);
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid rgba($color-neutral, 0.08);
+    border-radius: pxToRem(16);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  &__guest {
+    margin: pxToRem(20) 0 0;
+    font-size: pxToRem(14);
+    color: $color-neutral;
+    opacity: 0.6;
+    text-align: center;
+  }
+
+  &__guest-link {
+    font-weight: 600;
+    color: $color-primary;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__benefits {
+    padding-top: pxToRem(16);
+    border-top: 1px solid rgba($color-neutral, 0.08);
+  }
+
+  &__benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(12);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__benefit {
+    display: flex;
+    align-items: center;
+    gap: pxToRem(10);
+    font-size: pxToRem(14);
+    color: $color-neutral;
+    text-align: left;
+  }
+
+  &__benefit-icon {
+    flex-shrink: 0;
+    width: pxToRem(18);
+    height: pxToRem(18);
+    color: $color-primary;
+  }
+}

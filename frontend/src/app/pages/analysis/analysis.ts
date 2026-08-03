@@ -1,7 +1,7 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { form, required, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
-import { CreateAnalysisRequest } from '@core';
+import { AnalysisService, CreateAnalysisRequest, CreatedAnalysisResponse } from '@core';
 import { Button, Input, Navbar, ResultCard, Stepper, StepperStep } from 'app/shared';
 
 @Component({
@@ -11,6 +11,10 @@ import { Button, Input, Navbar, ResultCard, Stepper, StepperStep } from 'app/sha
   styleUrl: './analysis.scss',
 })
 export class Analysis {
+  readonly analysisService = inject(AnalysisService);
+  readonly result = signal<CreatedAnalysisResponse | null>(null);
+  readonly analyzing = signal<boolean>(false);
+
   readonly steps: StepperStep[] = [
     { title: 'Tu perfil', subtitle: 'Sube tu CV en PDF' },
     { title: 'Datos de la oferta', subtitle: 'Empresa y puesto' },
@@ -104,13 +108,29 @@ export class Analysis {
     this.activeStep.set(step);
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (!this.createAnalysisForm().valid()) {
       this.createAnalysisForm().markAsTouched();
       return;
     }
 
-    this.activeStep.set(4);
+    this.analyzing.set(true);
+
+    this.analysisService.createAnalysis(this.request()).subscribe({
+      next: (analysis) => {
+        this.result.set(analysis);
+
+        console.log(analysis);
+        
+        this.activeStep.set(4);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        this.analyzing.set(false);
+      },
+    });
   }
 
   reset() {

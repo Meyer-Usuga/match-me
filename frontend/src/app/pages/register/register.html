@@ -1,16 +1,26 @@
-<div class="login">
+<div class="register">
   <app-navbar />
 
-  <main class="login__body">
-    <div class="login__content">
-      <section class="login__hero">
-        <div class="login__hero-content">
-          <h1 class="login__title">Iniciar sesión</h1>
-          <p class="login__subtitle">Bienvenido de nuevo a MatchMe</p>
+  <main class="register__body">
+    <div class="register__content">
+      <section class="register__hero">
+        <div class="register__hero-content">
+          <h1 class="register__title">Crear cuenta</h1>
+          <p class="register__subtitle">Únete a MatchMe</p>
         </div>
       </section>
 
-      <section class="login__card">
+      <section class="register__card">
+        <app-input
+          id="name"
+          label="Nombre"
+          type="text"
+          placeholder="Tu nombre"
+          autocomplete="name"
+          [value]="credentials().name"
+          (valueChange)="onChange('name', $event)"
+          [error]="isInvalid('name') ? 'Ingresa tu nombre' : undefined"
+        />
         <app-input
           id="email"
           label="Correo electrónico"
@@ -18,7 +28,7 @@
           placeholder="tucorreo@ejemplo.com"
           autocomplete="email"
           [value]="credentials().email"
-          (valueChange)="onEmailChange($event)"
+          (valueChange)="onChange('email', $event)"
           [error]="isInvalid('email') ? 'Ingresa un correo electrónico válido' : undefined"
         />
         <app-input
@@ -26,18 +36,34 @@
           label="Contraseña"
           type="password"
           placeholder="••••••••"
-          autocomplete="current-password"
+          autocomplete="new-password"
           [value]="credentials().password"
-          (valueChange)="onPasswordChange($event)"
+          (valueChange)="onChange('password', $event)"
           [error]="isInvalid('password') ? 'Ingresa tu contraseña' : undefined"
         />
-        <app-button [full]="true" (click)="onSubmit()">Iniciar sesión</app-button>
+        <app-input
+          id="confirmPassword"
+          label="Confirmar contraseña"
+          type="password"
+          placeholder="••••••••"
+          autocomplete="new-password"
+          [value]="credentials().confirmPassword"
+          (valueChange)="onChange('confirmPassword', $event)"
+          [error]="
+            isInvalid('confirmPassword')
+              ? 'Confirma tu contraseña'
+              : confirmMismatch()
+                ? 'Las contraseñas no coinciden'
+                : undefined
+          "
+        />
+        <app-button [full]="true" (click)="onSubmit()">Crear cuenta</app-button>
 
-        <section class="login__benefits">
-          <ul class="login__benefits-list">
-            <li class="login__benefit">
+        <section class="register__benefits">
+          <ul class="register__benefits-list">
+            <li class="register__benefit">
               <svg
-                class="login__benefit-icon"
+                class="register__benefit-icon"
                 width="18"
                 height="18"
                 viewBox="0 0 24 24"
@@ -51,9 +77,9 @@
               </svg>
               <span>Guarda y recupera tus análisis</span>
             </li>
-            <li class="login__benefit">
+            <li class="register__benefit">
               <svg
-                class="login__benefit-icon"
+                class="register__benefit-icon"
                 width="18"
                 height="18"
                 viewBox="0 0 24 24"
@@ -67,9 +93,9 @@
               </svg>
               <span>Compara versiones de tu CV</span>
             </li>
-            <li class="login__benefit">
+            <li class="register__benefit">
               <svg
-                class="login__benefit-icon"
+                class="register__benefit-icon"
                 width="18"
                 height="18"
                 viewBox="0 0 24 24"
@@ -87,9 +113,9 @@
         </section>
       </section>
 
-      <p class="login__guest">
-        ¿No tienes cuenta?
-        <a class="login__guest-link" routerLink="/register">Regístrate</a>
+      <p class="register__guest">
+        ¿Ya tienes cuenta?
+        <a class="register__guest-link" routerLink="/login">Inicia sesión</a>
       </p>
     </div>
   </main>
