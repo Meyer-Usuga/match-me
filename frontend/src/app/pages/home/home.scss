@@ -10,10 +10,10 @@
   &__hero {
     display: flex;
     flex-direction: column;
-    padding: pxToRem(80) pxToRem(24) 0;
+    padding: pxToRem(128) pxToRem(24) 0;
 
     @include media-gtsm {
-      padding: pxToRem(80) pxToRem(48) 0;
+      padding: pxToRem(128) pxToRem(48) 0;
     }
   }
 
@@ -158,6 +158,7 @@
 
   &__how {
     padding: pxToRem(80) 0 pxToRem(60);
+    scroll-margin-top: pxToRem(80);
   }
 
   &__how-title {
@@ -211,6 +212,70 @@
     margin: 0;
     max-width: pxToRem(260);
     font-size: pxToRem(14);
+    line-height: 1.6;
+    color: $color-neutral;
+    opacity: 0.55;
+  }
+
+  // ─── Benefits ──────────────────────────────────────────────────
+
+  &__benefits {
+    padding: pxToRem(20) 0 pxToRem(80);
+    scroll-margin-top: pxToRem(80);
+  }
+
+  &__benefits-title {
+    margin: 0 0 pxToRem(48);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 600;
+    color: $color-neutral;
+    text-align: center;
+  }
+
+  &__benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: pxToRem(16);
+    max-width: pxToRem(1000);
+    margin: 0 auto;
+
+    @include media-gtsm {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__benefit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: pxToRem(24);
+    border-radius: pxToRem(16);
+    background: rgba($color-neutral, 0.03);
+    border: 1px solid rgba($color-neutral, 0.06);
+  }
+
+  &__benefit-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: pxToRem(48);
+    height: pxToRem(48);
+    border-radius: 50%;
+    margin-bottom: pxToRem(16);
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+  }
+
+  &__benefit-title {
+    margin: 0 0 pxToRem(8);
+    font-size: pxToRem(16);
+    font-weight: 600;
+    color: $color-neutral;
+  }
+
+  &__benefit-text {
+    margin: 0;
+    font-size: pxToRem(13);
     line-height: 1.6;
     color: $color-neutral;
     opacity: 0.55;

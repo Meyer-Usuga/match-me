@@ -7,11 +7,11 @@
   background: $color-white;
 
   &__hero {
-    padding: pxToRem(56) pxToRem(24) pxToRem(32);
+    padding: pxToRem(128) pxToRem(24) pxToRem(32);
     text-align: center;
 
     @include media-gtsm {
-      padding: pxToRem(56) pxToRem(48) pxToRem(40);
+      padding: pxToRem(128) pxToRem(48) pxToRem(40);
     }
   }
 

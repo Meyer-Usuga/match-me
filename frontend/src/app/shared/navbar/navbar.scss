@@ -2,61 +2,132 @@
 
 .navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: pxToRem(16);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  padding: pxToRem(12) pxToRem(24);
-  background: $color-white;
+  width: 100%;
+  max-width: pxToRem(980);
+  padding: 0 pxToRem(16);
   z-index: 100;
-
-  @include media-gtsm {
-    padding: pxToRem(12) pxToRem(48);
-  }
 
   &__inner {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    max-width: pxToRem(1100);
+    gap: pxToRem(20);
+    padding: pxToRem(10) pxToRem(20);
+    border-radius: pxToRem(18);
+    background: rgba($color-white, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba($color-neutral, 0.06);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   }
 
   &__brand {
     display: flex;
     align-items: center;
     gap: pxToRem(10);
+    flex-shrink: 0;
   }
 
   &__logo {
-    width: pxToRem(40);
+    width: pxToRem(32);
     height: auto;
   }
 
   &__brand-text {
-    font-size: pxToRem(18);
+    font-size: pxToRem(17);
     font-weight: 700;
     color: $color-neutral;
-    text-decoration: underline;
+    white-space: nowrap;
+  }
+
+  &__divider {
+    width: 1px;
+    height: pxToRem(30);
+    flex-shrink: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba($color-neutral, 0.18),
+      transparent
+    );
   }
 
   &__links {
     display: flex;
-    gap: pxToRem(24);
     align-items: center;
+    gap: pxToRem(4);
   }
 
   &__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: pxToRem(6);
+    padding: pxToRem(8) pxToRem(12);
+    border-radius: pxToRem(10);
     font-size: pxToRem(14);
     font-weight: 500;
     color: $color-neutral;
     opacity: 0.65;
     text-decoration: none;
-    transition: opacity 0.2s;
+    white-space: nowrap;
+    transition: color 0.2s, opacity 0.2s;
+
+    svg {
+      flex-shrink: 0;
+    }
 
     &:hover {
       opacity: 1;
+      color: $color-primary;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: pxToRem(-6);
+      width: 0;
+      height: pxToRem(3);
+      border-radius: 999px;
+      background: $color-primary;
+      transition: width 0.25s ease;
+    }
+
+    &--active {
+      color: $color-primary;
+      opacity: 1;
+
+      &::after {
+        width: 60%;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: pxToRem(8);
+    flex-shrink: 0;
+  }
+
+  @include media-ltmd {
+    padding: 0;
+
+    &__inner {
+      width: 100%;
+      justify-content: flex-start;
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 }
