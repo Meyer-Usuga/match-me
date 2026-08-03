@@ -9,7 +9,6 @@
   justify-content: center;
   padding: pxToRem(12) pxToRem(24);
   background: $color-white;
-  border-bottom: 1px solid rgba($color-neutral, 0.06);
   z-index: 100;
 
   @include media-gtsm {
@@ -38,10 +37,8 @@
   &__brand-text {
     font-size: pxToRem(18);
     font-weight: 700;
-    background: linear-gradient(135deg, #F857C1, #C85AF4 50%, #7C3AED);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: $color-neutral;
+    text-decoration: underline;
   }
 
   &__links {

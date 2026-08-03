@@ -8,6 +8,7 @@ import { Component, input } from '@angular/core';
 })
 export class Button {
   readonly variant = input<'primary' | 'secondary'>('primary');
+  readonly size = input<'sm' | 'md'>('md');
   readonly full = input(false);
   readonly disabled = input(false);
 }

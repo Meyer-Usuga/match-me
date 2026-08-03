@@ -4,26 +4,141 @@
   <section class="home__hero">
     <div class="home__hero-content">
       <div class="home__hero-left">
-        <h1 class="home__title">Encuentra tu match</h1>
+        <span class="home__tag">
+          <svg
+            class="home__tag-icon"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 3l1.9 4.4L18 9.3l-4.1 1.9L12 15.6l-1.9-4.4L6 9.3l4.1-1.9L12 3zM19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"
+            />
+          </svg>
+          Impulsado por IA
+        </span>
+
+        <h1 class="home__title">
+          Encuentra tu<br />
+          <span class="home__title-accent">match</span>
+        </h1>
+
         <p class="home__description">
           Compara tu perfil profesional con cualquier oferta laboral y descubre qué tan cerca estás
-          del trabajo de tus sueños. Obtené un análisis detallado con inteligencia artificial,
-          incluyendo match score, skills faltantes, y recomendaciones personalizadas para mejorar
-          tu candidatura.
+          del trabajo de tus sueños con la ayuda de la inteligencia artificial.
         </p>
+
         <div class="home__features">
-          <span class="home__feature">✓ Análisis IA en segundos</span>
-          <span class="home__feature">✓ Recomendaciones accionables</span>
-          <span class="home__feature">✓ Sin registro necesario</span>
+          <div class="home__feature">
+            <span class="home__feature-icon">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+              </svg>
+            </span>
+            <div class="home__feature-text">
+              <span class="home__feature-title">Análisis de IA en segundos</span>
+              <span class="home__feature-subtitle">Resultados rápidos y precisos</span>
+            </div>
+          </div>
+
+          <div class="home__feature">
+            <span class="home__feature-icon">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+            <div class="home__feature-text">
+              <span class="home__feature-title">Recomendaciones adicionales</span>
+              <span class="home__feature-subtitle">Mejora tu perfil con consejos claros</span>
+            </div>
+          </div>
+
+          <div class="home__feature">
+            <span class="home__feature-icon">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </span>
+            <div class="home__feature-text">
+              <span class="home__feature-title">Sin registro necesario</span>
+              <span class="home__feature-subtitle">Prueba gratis sin preocuparte</span>
+            </div>
+          </div>
         </div>
+
         <div class="home__ctas">
-          <app-button routerLink="/login">Inicia sesión</app-button>
-          <app-button variant="secondary" routerLink="/analysis">Prueba como invitado</app-button>
+          <app-button routerLink="/login">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            Inicia sesión
+          </app-button>
+          <app-button variant="secondary" routerLink="/analysis">
+            Prueba como invitado
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </app-button>
         </div>
       </div>
 
       <div class="home__hero-right">
-        <app-result-card />
+        <app-result-card [preview]="true" />
       </div>
     </div>
 

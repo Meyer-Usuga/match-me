@@ -52,4 +52,9 @@
   &--full {
     width: 100%;
   }
+
+  &--sm {
+    padding: pxToRem(9) pxToRem(24);
+    font-size: pxToRem(13);
+  }
 }

@@ -3,6 +3,7 @@
   class="btn"
   [disabled]="disabled()"
   [class.btn--secondary]="variant() === 'secondary'"
+  [class.btn--sm]="size() === 'sm'"
   [class.btn--full]="full()"
 >
   <ng-content />

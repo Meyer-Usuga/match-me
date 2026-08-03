@@ -35,5 +35,12 @@ export class ResultCard {
     improvementPriority: [],
   });
 
+  readonly preview = input(false);
+
+  readonly previewSummary = computed(() => {
+    const summary = this.aiResult().summary;
+    return summary.length > 80 ? `${summary.slice(0, 80).trimEnd()}...` : summary;
+  });
+
   readonly gaugeOffset = computed(() => GAUGE_CIRCUMFERENCE * (1 - this.score() / 100));
 }
