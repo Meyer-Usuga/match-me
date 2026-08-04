@@ -1,11 +1,10 @@
 import { Component, computed, input } from '@angular/core';
 import { AiResult } from '@core';
-
-const GAUGE_CIRCUMFERENCE = 326.7;
+import { Gauge } from '../gauge/gauge';
 
 @Component({
   selector: 'app-result-card',
-  imports: [],
+  imports: [Gauge],
   templateUrl: './result-card.html',
   styleUrl: './result-card.scss',
 })
@@ -41,6 +40,4 @@ export class ResultCard {
     const summary = this.aiResult().summary;
     return summary.length > 80 ? `${summary.slice(0, 80).trimEnd()}...` : summary;
   });
-
-  readonly gaugeOffset = computed(() => GAUGE_CIRCUMFERENCE * (1 - this.score() / 100));
 }

@@ -2,7 +2,7 @@ import { Component, signal, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { AnalysisService } from '@core';
-import { Navbar, Button } from 'app/shared';
+import { Navbar, Button, Gauge } from 'app/shared';
 
 interface MockAnalysis {
   id: string;
@@ -14,14 +14,17 @@ interface MockAnalysis {
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Navbar, Button, RouterLink],
+  imports: [Navbar, Button, Gauge, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
   readonly analysisService = inject(AnalysisService);
-  readonly listAnalyses = toSignal(this.analysisService.getUserAnalyses(), { initialValue: []});
+  readonly listAnalyses = toSignal(this.analysisService.getUserAnalyses());
+  readonly loading = computed(() => this.listAnalyses() === undefined);
   readonly showEmpty = signal(false);
+
+  readonly skeletonCards = Array.from({ length: 6 }, (_, index) => index);
 
   readonly allMocks: MockAnalysis[] = [
     {
@@ -60,6 +63,21 @@ export class Dashboard {
 
   toggleMocks() {
     this.showEmpty.update((prev) => !prev);
+  }
+
+  formatDate(value: string): string {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return value;
+    }
+
+    return new Intl.DateTimeFormat('es-ES', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date);
   }
 }
 

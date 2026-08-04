@@ -26,31 +26,7 @@
           </div>
         </div>
 
-        <div class="result-card__gauge">
-          <svg class="result-card__gauge-ring" viewBox="0 0 120 120">
-            <defs>
-              <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#F857C1" />
-                <stop offset="50%" stop-color="#C85AF4" />
-                <stop offset="100%" stop-color="#7C3AED" />
-              </linearGradient>
-            </defs>
-            <circle class="result-card__gauge-bg" cx="60" cy="60" r="52" />
-            <circle
-              class="result-card__gauge-fill"
-              cx="60"
-              cy="60"
-              r="52"
-              stroke="url(#gaugeGrad)"
-              stroke-dasharray="326.7"
-              [attr.stroke-dashoffset]="gaugeOffset()"
-            />
-          </svg>
-          <div class="result-card__gauge-text">
-            <span class="result-card__gauge-value">{{ score() }}%</span>
-            <span class="result-card__gauge-label">Match</span>
-          </div>
-        </div>
+        <app-gauge [score]="score()" />
       </div>
 
       <div class="result-card__section">
@@ -172,31 +148,7 @@
         </div>
       </div>
 
-      <div class="result-card__gauge">
-        <svg class="result-card__gauge-ring" viewBox="0 0 120 120">
-          <defs>
-            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#F857C1" />
-              <stop offset="50%" stop-color="#C85AF4" />
-              <stop offset="100%" stop-color="#7C3AED" />
-            </linearGradient>
-          </defs>
-          <circle class="result-card__gauge-bg" cx="60" cy="60" r="52" />
-          <circle
-            class="result-card__gauge-fill"
-            cx="60"
-            cy="60"
-            r="52"
-            stroke="url(#gaugeGrad)"
-            stroke-dasharray="326.7"
-            [attr.stroke-dashoffset]="gaugeOffset()"
-          />
-        </svg>
-        <div class="result-card__gauge-text">
-          <span class="result-card__gauge-value">{{ score() }}%</span>
-          <span class="result-card__gauge-label">Match</span>
-        </div>
-      </div>
+      <app-gauge [score]="score()" />
     </div>
 
     <div class="result-card__section">

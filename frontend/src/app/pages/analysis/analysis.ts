@@ -82,7 +82,15 @@ export class Analysis implements OnDestroy {
   }
 
   onJobDescriptionChange(value: string) {
-    this.setValue('jobDescription', value);
+    const sanitize = value
+      .trim()
+      .replace(/\r\n/g, '\n')
+      .replace(/\n{3,}/g, '\n\n')
+      .replace(/[ \t]{2,}/g, ' ')
+      .replace(/[\u0000-\u001F]/g, '')
+      .replace(/<[^>]*>/g, '')
+      .slice(0, 10000);
+    this.setValue('jobDescription', sanitize);
   }
 
   private setValue(field: keyof CreateAnalysisRequest, value: string) {

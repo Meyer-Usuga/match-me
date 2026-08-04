@@ -27,60 +27,6 @@
     margin-bottom: pxToRem(24);
   }
 
-  &__gauge {
-    position: relative;
-    width: pxToRem(90);
-    height: pxToRem(90);
-    flex-shrink: 0;
-  }
-
-  &__gauge-ring {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-  }
-
-  &__gauge-bg {
-    fill: none;
-    stroke: rgba($color-neutral, 0.06);
-    stroke-width: 8;
-  }
-
-  &__gauge-fill {
-    fill: none;
-    stroke-width: 8;
-    stroke-linecap: round;
-  }
-
-  &__gauge-text {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__gauge-value {
-    font-size: pxToRem(20);
-    font-weight: 700;
-    line-height: 1;
-    background: linear-gradient(135deg, #F857C1, #C85AF4 50%, #7C3AED);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  &__gauge-label {
-    font-size: pxToRem(9);
-    font-weight: 500;
-    color: $color-neutral;
-    opacity: 0.4;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-top: pxToRem(2);
-  }
-
   &__skills {
     flex: 1;
     min-width: 0;

@@ -24,12 +24,32 @@
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          {{ listAnalyses().length === 0 ? 'Crear primer análisis' : 'Crear nuevo análisis'}}
+          {{ listAnalyses()?.length === 0 ? 'Crear primer análisis' : 'Crear nuevo análisis'}}
         </app-button> 
       </div>
     </header>
 
-    @if (listAnalyses().length === 0) {
+    @if (loading()) {
+      <section class="dashboard__grid">
+        @for (skeleton of skeletonCards; track skeleton) {
+          <article class="dashboard-card dashboard-card--skeleton">
+            <div class="dashboard-card__top">
+              <div class="dashboard-card__info">
+                <div class="skeleton skeleton--company"></div>
+                <div class="skeleton skeleton--title"></div>
+                <div class="skeleton skeleton--date"></div>
+              </div>
+
+              <div class="skeleton skeleton--gauge"></div>
+            </div>
+
+            <div class="dashboard-card__footer">
+              <div class="skeleton skeleton--button"></div>
+            </div>
+          </article>
+        }
+      </section>
+    } @else if (listAnalyses()!.length === 0) {
       <section class="dashboard__empty-state">
         <div class="dashboard__empty-icon-container">
           <svg
@@ -60,28 +80,19 @@
       <section class="dashboard__grid">
         @for (item of listAnalyses(); track item.id) {
           <article class="dashboard-card">
-            <div class="dashboard-card__header">
-              <span class="dashboard-card__company">{{ item.company }}</span>
-              <span class="dashboard-card__date">{{ item.date }}</span>
-            </div>
-
-            <h3 class="dashboard-card__title">{{ item.jobTitle }}</h3>
-
-            <div class="dashboard-card__footer">
-              <div class="dashboard-card__score-container">
-                <span class="dashboard-card__score-label">Match Score</span>
-                <div class="dashboard-card__score-wrapper">
-                  <div
-                    class="dashboard-card__score-pill"
-                    [class.dashboard-card__score-pill--high]="item.score >= 85"
-                    [class.dashboard-card__score-pill--mid]="item.score >= 65 && item.score < 85"
-                    [class.dashboard-card__score-pill--low]="item.score < 65"
-                  >
-                    {{ item.score }}%
-                  </div>
-                </div>
+            <div class="dashboard-card__top">
+              <div class="dashboard-card__info">
+                <span class="dashboard-card__company">{{ item.company }}</span>
+                <h3 class="dashboard-card__title">{{ item.jobTitle }}</h3>
+                <p class="dashboard-card__date">
+                  <span class="dashboard-card__date-label">Fecha:</span> {{ formatDate(item.date) }}
+                </p>
               </div>
 
+              <app-gauge [score]="item.score" />
+            </div>
+
+            <div class="dashboard-card__footer">
               <app-button variant="secondary" size="sm" routerLink="/analysis">
                 Ver detalle
               </app-button>

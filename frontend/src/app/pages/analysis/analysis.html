@@ -140,6 +140,12 @@
           (valueChange)="onJobDescriptionChange($event)"
           [error]="isInvalid('jobDescription') ? 'Mínimo 500 y máximo 2000 caracteres' : undefined"
         />
+
+        @if(request().jobDescription && request().jobDescription.length >= 500) {
+          <p class="analysis__card-info">
+            La información ha sido limpiada y optimizada para un mejor análisis. Caracteres: {{ request().jobDescription?.length }}
+          </p>
+        }
       </div>
     }
 

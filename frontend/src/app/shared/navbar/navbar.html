@@ -55,6 +55,29 @@
         </svg>
         Mis Análisis
       </a>
+      <a
+        class="navbar__link"
+        [routerLink]="isLoggedIn ? '/skills' : null"
+        routerLinkActive="navbar__link--active"
+        (click)="onDashboardClick($event)"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          style="margin-right: 6px; vertical-align: middle;"
+        >
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+        </svg>
+        Mis hojas de vida
+      </a>
     </div>
 
     <span class="navbar__divider" aria-hidden="true"></span>

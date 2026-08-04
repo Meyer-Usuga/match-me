@@ -94,6 +94,13 @@
     }
   }
 
+  &__card-info {
+    font-size: pxToRem(12);
+    color: $color-neutral;
+    opacity: 0.6;
+    text-align: left;
+  }
+
   &__card-error {
     font-size: pxToRem(12);
     color: #e74c5e;
