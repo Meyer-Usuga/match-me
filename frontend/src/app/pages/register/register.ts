@@ -62,6 +62,7 @@ export class Register {
     this.#authService.registerUser(this.credentials()).subscribe({
       next: (response: RegisterResponse) => {
         setCookie('access_token', response.accessToken, 1);
+        setCookie('analyses_count', String(response.countAnalisis), 1);
         this.#router.navigate(['/home']);
       },
       error: (error) => {

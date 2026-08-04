@@ -1,4 +1,5 @@
 import { UserRepository } from "@/modules/users/repositories/user.repository";
+import { AnalysisRepository } from "@/modules/analysis/repositories/analysis.respository";
 import { AppError } from "@/utils/errors/app-error";
 import { AuthResponseDto, LoginUserDto, RegisterUserDto } from "../dtos";
 import bcrypt from "bcrypt";
@@ -8,6 +9,7 @@ export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly tokenService: TokenService,
+    private readonly analysisRepository: AnalysisRepository,
   ) {}
 
   public async register(dto: RegisterUserDto): Promise<AuthResponseDto> {
@@ -37,6 +39,7 @@ export class AuthService {
       name: createdUser.name,
       email: createdUser.email,
       accessToken,
+      countAnalisis: 0,
     };
   }
 
@@ -63,10 +66,13 @@ export class AuthService {
 
     const accessToken = this.tokenService.generateToken({ userId: user.id });
 
+    const countAnalisis = await this.analysisRepository.countByUserId(user.id);
+
     return {
       name: user.name,
       email: user.email,
       accessToken,
+      countAnalisis,
     };
   }
 }

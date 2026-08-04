@@ -58,6 +58,7 @@ export class Login {
     this.#authService.loginUser(this.credentials()).subscribe({
       next: (response: LoginUserResponse) => {
         setCookie('access_token', response.accessToken, 1);
+        setCookie('analyses_count', String(response.countAnalisis), 1);
         this.#router.navigate(['/dashboard']);
       },
       error: (error) => {

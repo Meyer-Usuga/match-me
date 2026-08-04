@@ -56,7 +56,9 @@ export class AnalysisService {
     formData.append('jobTitle', request.jobTitle.trim());
     formData.append('jobDescription', this.sanitizeText(request.jobDescription));
 
-    if (request.cvFile) {
+    if (request.useLastCv) {
+      formData.append('useLastCv', 'true');
+    } else if (request.cvFile) {
       formData.append('cv', request.cvFile);
     }
 

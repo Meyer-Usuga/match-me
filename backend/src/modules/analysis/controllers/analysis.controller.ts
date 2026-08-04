@@ -12,7 +12,9 @@ export class AnalysisController {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      if (!req.file) {
+      const useLastCv = req.body.useLastCv === "true";
+
+      if (!useLastCv && !req.file) {
         throw new AppError({
           message: "CV file is required!",
           statusCode: 400,
@@ -25,6 +27,7 @@ export class AnalysisController {
         jobTitle: req.body.jobTitle,
         jobDescription: req.body.jobDescription,
         cvFile: req.file,
+        useLastCv,
       };
 
       const analysis = await this.analysisService.create(dto);

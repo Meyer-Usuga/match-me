@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { disabled, form, maxLength, minLength, required, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
-import { AiResult, AnalysisService, CreateAnalysisRequest, CreatedAnalysisResponse, getCookie } from '@core';
+import { AiResult, AnalysisService, CreateAnalysisRequest, CreatedAnalysisResponse, getCookie, setCookie } from '@core';
 import { Button, Input, Navbar, ResultCard, Stepper, StepperStep } from 'app/shared';
 
 const EMPTY_AI_RESULT: AiResult = {
@@ -11,6 +11,8 @@ const EMPTY_AI_RESULT: AiResult = {
   recommendations: [],
   improvementPriority: [],
 };
+
+type AnalysisFormField = 'company' | 'jobTitle' | 'jobDescription' | 'cvFile';
 
 const PROGRESS_STEP_MS = 1800;
 
@@ -53,6 +55,17 @@ export class Analysis implements OnDestroy {
 
   readonly request = signal<CreateAnalysisRequest>({ ...this.initialRequest });
   readonly useLastCv = signal(false);
+  readonly analysesCount = signal<number>(Number(getCookie('analyses_count') ?? -1));
+  readonly canUseLastCv = computed(() => this.isLoggedIn && this.analysesCount() > 0);
+
+  constructor() {
+    if (this.isLoggedIn && this.analysesCount() < 0) {
+      this.analysisService.getUserAnalyses().subscribe((analyses) => {
+        setCookie('analyses_count', String(analyses.length), 1);
+        this.analysesCount.set(analyses.length);
+      });
+    }
+  }
 
   readonly schema = schema<CreateAnalysisRequest>((a) => {
     required(a.company);
@@ -70,7 +83,7 @@ export class Analysis implements OnDestroy {
 
   readonly fileName = computed(() => this.request().cvFile?.name ?? null);
 
-  isInvalid(field: keyof CreateAnalysisRequest) {
+  isInvalid(field: AnalysisFormField) {
     const state = this.createAnalysisForm[field]();
     return state.touched() && state.invalid();
   }
@@ -95,7 +108,7 @@ export class Analysis implements OnDestroy {
     this.setValue('jobDescription', sanitize);
   }
 
-  private setValue(field: keyof CreateAnalysisRequest, value: string) {
+  private setValue(field: Exclude<AnalysisFormField, 'cvFile'>, value: string) {
     this.request.update((current) => ({ ...current, [field]: value }));
     this.createAnalysisForm[field]().markAsTouched();
   }
@@ -120,9 +133,11 @@ export class Analysis implements OnDestroy {
     const checked = (event.target as HTMLInputElement).checked;
     this.useLastCv.set(checked);
 
-    if (checked) {
-      this.request.update((value) => ({ ...value, cvFile: null }));
-    }
+    this.request.update((value) => ({
+      ...value,
+      useLastCv: checked,
+      cvFile: checked ? null : value.cvFile,
+    }));
   }
 
   next() {
@@ -175,6 +190,11 @@ export class Analysis implements OnDestroy {
         });
         this.analyzing.set(false);
         this.activeStep.set(4);
+
+        if (this.analysesCount() >= 0) {
+          this.analysesCount.update((count) => count + 1);
+          setCookie('analyses_count', String(this.analysesCount()), 1);
+        }
       },
       error: (error) => {
         console.error(error);

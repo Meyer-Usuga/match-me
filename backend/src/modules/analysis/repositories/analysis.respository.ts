@@ -39,4 +39,26 @@ export class AnalysisRepository {
       },
     });
   }
+
+  public async findLastByUserId(userId: string) {
+    return await prisma.analysis.findFirst({
+      select: {
+        cvText: true,
+      },
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
+  public async countByUserId(userId: string) {
+    return await prisma.analysis.count({
+      where: {
+        userId,
+      },
+    });
+  }
 }

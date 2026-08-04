@@ -8,6 +8,7 @@ import { PromptBuilderService } from "./prompt-builder.service";
 import { GeminiService } from "./gemini.service";
 import { PdfService } from "./pdf.service";
 import { ScoreService } from "./score.service";
+import { AppError } from "@/utils/errors/app-error";
 
 export class AnalysisService {
   constructor(
@@ -21,7 +22,39 @@ export class AnalysisService {
   ) {}
 
   public async create(dto: CreateAnalysisDto) {
-    const cvText = await this.pdfService.extractText(dto.cvFile);
+    let cvText: string;
+
+    if (dto.useLastCv) {
+      if (!dto.userId) {
+        throw new AppError({
+          message: "You must be logged in to reuse your last CV!",
+          statusCode: 401,
+        });
+      }
+
+      const lastAnalysis = await this.analysisRepository.findLastByUserId(
+        dto.userId,
+      );
+
+      if (!lastAnalysis || !lastAnalysis.cvText) {
+        throw new AppError({
+          message: "No previous analysis found!",
+          statusCode: 404,
+        });
+      }
+
+      cvText = lastAnalysis.cvText;
+    } else {
+      if (!dto.cvFile) {
+        throw new AppError({
+          message: "CV file is required!",
+          statusCode: 400,
+        });
+      }
+
+      cvText = await this.pdfService.extractText(dto.cvFile);
+    }
+
     const cvSkills = this.skillExtractionService.extractSkills(cvText);
     const jobSkills = this.skillExtractionService.extractSkills(
       dto.jobDescription,

@@ -5,6 +5,7 @@ export interface CreateAnalysisRequest {
   jobTitle: string;
   jobDescription: string;
   cvFile: File | null;
+  useLastCv?: boolean;
 }
 
 export interface AiResult {
@@ -45,10 +46,12 @@ export interface RegisterResponse {
   name: string;
   email: string;
   accessToken: string;
+  countAnalisis: number;
 }
 
 export interface LoginUserResponse {
   name: string;
   email: string;
   accessToken: string;
+  countAnalisis: number;
 }

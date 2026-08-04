@@ -3,5 +3,6 @@ export interface CreateAnalysisDto {
   company?: string;
   jobTitle?: string;
   jobDescription: string;
-  cvFile: Express.Multer.File;
+  cvFile?: Express.Multer.File;
+  useLastCv?: boolean;
 }

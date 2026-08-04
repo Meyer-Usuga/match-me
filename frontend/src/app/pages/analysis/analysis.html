@@ -18,7 +18,7 @@
     @if (activeStep() === 1) {
       <div class="analysis__card">
         <h4 class="analysis__card-title">Tu perfil</h4>
-        @if (isLoggedIn) {
+        @if (canUseLastCv()) {
           <label class="analysis__checkbox">
             <input type="checkbox" [checked]="useLastCv()" (change)="onUseLastCvChange($event)" />
             <span>Utilizar la información del último cv</span>
