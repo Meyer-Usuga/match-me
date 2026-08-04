@@ -2,6 +2,7 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
 import { Button } from '../button/button';
+import { getCookie, deleteCookie } from '@core';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,15 @@ export class Navbar implements OnDestroy {
   private readonly subscription = this.router.events
     .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
     .subscribe(() => this.scrollToFragment());
+
+  get isLoggedIn(): boolean {
+    return !!getCookie('access_token');
+  }
+
+  logout() {
+    deleteCookie('access_token');
+    this.router.navigate(['/login']);
+  }
 
   private scrollToFragment() {
     const hashIndex = this.router.url.indexOf('#');

@@ -1,0 +1,209 @@
+@use '../../../styles/utils' as *;
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-top: pxToRem(80);
+  box-sizing: border-box;
+  background: #f8fafc; // Clean off-white background
+
+  &__content {
+    width: 100%;
+    max-width: pxToRem(1200);
+    margin: 0 auto;
+    padding: pxToRem(40) pxToRem(24);
+    box-sizing: border-box;
+    flex: 1;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(16);
+    margin-bottom: pxToRem(40);
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__title {
+    margin: 0 0 pxToRem(8);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #f857c1, #c85af4 50%, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-size: pxToRem(16);
+    color: lighten($color-neutral, 20%);
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: pxToRem(12);
+  }
+
+  &__empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: pxToRem(60) pxToRem(24);
+    background: $color-white;
+    border: 1px dashed rgba($color-neutral, 0.15);
+    border-radius: pxToRem(20);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    margin-top: pxToRem(20);
+  }
+
+  &__empty-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: pxToRem(96);
+    height: pxToRem(96);
+    border-radius: 50%;
+    background: rgba($color-primary, 0.05);
+    color: $color-primary;
+    margin-bottom: pxToRem(24);
+    animation: pulseGlow 3s infinite ease-in-out;
+  }
+
+  &__empty-icon {
+    opacity: 0.8;
+  }
+
+  &__empty-title {
+    margin: 0 0 pxToRem(12);
+    font-size: pxToRem(20);
+    font-weight: 600;
+    color: $color-neutral;
+  }
+
+  &__empty-text {
+    margin: 0 0 pxToRem(24);
+    font-size: pxToRem(15);
+    color: lighten($color-neutral, 25%);
+    max-width: pxToRem(400);
+    line-height: 1.5;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(pxToRem(340), 1fr));
+    gap: pxToRem(24);
+  }
+}
+
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  background: $color-white;
+  border: 1px solid rgba($color-neutral, 0.06);
+  border-radius: pxToRem(16);
+  padding: pxToRem(24);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+    border-color: rgba($color-primary, 0.15);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: pxToRem(16);
+  }
+
+  &__company {
+    font-size: pxToRem(13);
+    font-weight: 600;
+    color: $color-primary;
+    background: rgba($color-primary, 0.06);
+    padding: pxToRem(4) pxToRem(10);
+    border-radius: pxToRem(20);
+  }
+
+  &__date {
+    font-size: pxToRem(12);
+    color: lighten($color-neutral, 35%);
+  }
+
+  &__title {
+    margin: 0 0 pxToRem(24);
+    font-size: pxToRem(18);
+    font-weight: 600;
+    color: $color-neutral;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: pxToRem(16);
+    border-top: 1px solid rgba($color-neutral, 0.04);
+  }
+
+  &__score-container {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(4);
+  }
+
+  &__score-label {
+    font-size: pxToRem(11);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: lighten($color-neutral, 30%);
+    font-weight: 500;
+  }
+
+  &__score-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: pxToRem(16);
+    font-weight: 700;
+    padding: pxToRem(4) pxToRem(12);
+    border-radius: pxToRem(8);
+    
+    &--high {
+      color: #10b981;
+      background: rgba(#10b981, 0.1);
+    }
+    &--mid {
+      color: #f59e0b;
+      background: rgba(#f59e0b, 0.1);
+    }
+    &--low {
+      color: #ef4444;
+      background: rgba(#ef4444, 0.1);
+    }
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba($color-primary, 0.15);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 8px rgba($color-primary, 0.08);
+  }
+}

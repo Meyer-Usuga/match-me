@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { email, form, required, schema } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService, LoginRequest, LoginUserResponse } from '@core';
+import { AuthService, LoginRequest, LoginUserResponse, setCookie } from '@core';
 import { Button, Input, Navbar } from 'app/shared';
 
 @Component({
@@ -53,7 +53,7 @@ export class Login {
 
     this.#authService.loginUser(this.credentials()).subscribe({
       next: (response: LoginUserResponse) => {
-        console.log(response);
+        setCookie('access_token', response.accessToken, 1);
         this.#router.navigate(['/home']);
       },
       error: (error) => {

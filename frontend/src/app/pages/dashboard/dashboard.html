@@ -1,0 +1,97 @@
+<div class="dashboard">
+  <app-navbar />
+
+  <main class="dashboard__content">
+    <header class="dashboard__header">
+      <div>
+        <h1 class="dashboard__title">Panel de Control</h1>
+        <p class="dashboard__subtitle">Historial de compatibilidad de tus postulaciones</p>
+      </div>
+
+      <div class="dashboard__controls">
+        <app-button variant="secondary" size="sm" (click)="toggleMocks()">
+          {{ showEmpty() ? 'Simular con datos' : 'Simular estado vacío' }}
+        </app-button>
+        <app-button size="sm" routerLink="/analysis">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="margin-right: 6px; vertical-align: middle;"
+          >
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Nuevo Análisis
+        </app-button>
+      </div>
+    </header>
+
+    @if (analyses().length === 0) {
+      <section class="dashboard__empty-state">
+        <div class="dashboard__empty-icon-container">
+          <svg
+            class="dashboard__empty-icon"
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <line x1="10" y1="9" x2="8" y2="9" />
+          </svg>
+        </div>
+        <h2 class="dashboard__empty-title">No tienes ningún análisis previo</h2>
+        <p class="dashboard__empty-text">
+          Sube tu currículum y compáralo con una vacante para ver tu primer porcentaje de match aquí.
+        </p>
+        <app-button routerLink="/analysis">Comenzar ahora</app-button>
+      </section>
+    } @else {
+      <section class="dashboard__grid">
+        @for (item of analyses(); track item.id) {
+          <article class="dashboard-card">
+            <div class="dashboard-card__header">
+              <span class="dashboard-card__company">{{ item.company }}</span>
+              <span class="dashboard-card__date">{{ item.date }}</span>
+            </div>
+
+            <h3 class="dashboard-card__title">{{ item.jobTitle }}</h3>
+
+            <div class="dashboard-card__footer">
+              <div class="dashboard-card__score-container">
+                <span class="dashboard-card__score-label">Match Score</span>
+                <div class="dashboard-card__score-wrapper">
+                  <div
+                    class="dashboard-card__score-pill"
+                    [class.dashboard-card__score-pill--high]="item.score >= 85"
+                    [class.dashboard-card__score-pill--mid]="item.score >= 65 && item.score < 85"
+                    [class.dashboard-card__score-pill--low]="item.score < 65"
+                  >
+                    {{ item.score }}%
+                  </div>
+                </div>
+              </div>
+
+              <app-button variant="secondary" size="sm" routerLink="/analysis">
+                Ver detalle
+              </app-button>
+            </div>
+          </article>
+        }
+      </section>
+    }
+  </main>
+</div>

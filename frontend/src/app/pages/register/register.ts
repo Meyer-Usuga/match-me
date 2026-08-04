@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { email, form, required, schema } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService, RegisterRequest, RegisterResponse } from '@core';
+import { AuthService, RegisterRequest, RegisterResponse, setCookie } from '@core';
 import { Button, Input, Navbar } from 'app/shared';
 
 @Component({
@@ -57,8 +57,8 @@ export class Register {
 
     this.#authService.registerUser(this.credentials()).subscribe({
       next: (response: RegisterResponse) => {
-        console.log(response);
-        // this.#router.navigate(['/home']);
+        setCookie('access_token', response.accessToken, 1);
+        this.#router.navigate(['/home']);
       },
       error: (error) => {
         console.error(error);
