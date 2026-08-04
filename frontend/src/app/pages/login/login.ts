@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { email, form, required, schema } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
-import { LoginCredentials } from '@core';
+import { AuthService, LoginRequest, LoginUserResponse } from '@core';
 import { Button, Input, Navbar } from 'app/shared';
 
 @Component({
@@ -11,14 +11,15 @@ import { Button, Input, Navbar } from 'app/shared';
   styleUrl: './login.scss',
 })
 export class Login {
-  private readonly router = inject(Router);
+  readonly #authService = inject(AuthService);
+  readonly #router = inject(Router);
 
-  readonly credentials = signal<LoginCredentials>({
+  readonly credentials = signal<LoginRequest>({
     email: '',
     password: '',
   });
 
-  readonly schema = schema<LoginCredentials>((c) => {
+  readonly schema = schema<LoginRequest>((c) => {
     required(c.email);
     email(c.email);
     required(c.password);
@@ -26,7 +27,7 @@ export class Login {
 
   readonly loginForm = form(this.credentials, this.schema);
 
-  isInvalid(field: keyof LoginCredentials) {
+  isInvalid(field: keyof LoginRequest) {
     const state = this.loginForm[field]();
     return state.touched() && state.invalid();
   }
@@ -39,7 +40,7 @@ export class Login {
     this.setValue('password', value);
   }
 
-  private setValue(field: keyof LoginCredentials, value: string) {
+  private setValue(field: keyof LoginRequest, value: string) {
     this.credentials.update((current) => ({ ...current, [field]: value }));
     this.loginForm[field]().markAsTouched();
   }
@@ -50,6 +51,14 @@ export class Login {
       return;
     }
 
-    this.router.navigate(['/home']);
+    this.#authService.loginUser(this.credentials()).subscribe({
+      next: (response: LoginUserResponse) => {
+        console.log(response);
+        this.#router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 }

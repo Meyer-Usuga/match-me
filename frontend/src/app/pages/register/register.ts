@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { email, form, required, schema } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
-import { RegisterCredentials } from '@core';
+import { AuthService, RegisterRequest, RegisterResponse } from '@core';
 import { Button, Input, Navbar } from 'app/shared';
 
 @Component({
@@ -11,16 +11,17 @@ import { Button, Input, Navbar } from 'app/shared';
   styleUrl: './register.scss',
 })
 export class Register {
-  private readonly router = inject(Router);
+  readonly #authService = inject(AuthService);
+  readonly #router = inject(Router);
 
-  readonly credentials = signal<RegisterCredentials>({
+  readonly credentials = signal<RegisterRequest>({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
 
-  readonly schema = schema<RegisterCredentials>((c) => {
+  readonly schema = schema<RegisterRequest>((c) => {
     required(c.name);
     required(c.email);
     email(c.email);
@@ -30,7 +31,7 @@ export class Register {
 
   readonly registerForm = form(this.credentials, this.schema);
 
-  isInvalid(field: keyof RegisterCredentials) {
+  isInvalid(field: keyof RegisterRequest) {
     const state = this.registerForm[field]();
     return state.touched() && state.invalid();
   }
@@ -42,7 +43,7 @@ export class Register {
     );
   }
 
-  onChange(field: keyof RegisterCredentials, value: string) {
+  onChange(field: keyof RegisterRequest, value: string) {
     this.credentials.update((current) => ({ ...current, [field]: value }));
     this.registerForm[field]().markAsTouched();
   }
@@ -54,6 +55,14 @@ export class Register {
       return;
     }
 
-    this.router.navigate(['/home']);
+    this.#authService.registerUser(this.credentials()).subscribe({
+      next: (response: RegisterResponse) => {
+        console.log(response);
+        // this.#router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 }
