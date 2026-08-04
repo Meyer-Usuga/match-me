@@ -22,6 +22,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'detail/:id',
+    loadComponent: () => import('@pages').then((m) => m.Detail),
+    canActivate: [authGuard],
+  },
+  {
     path: 'analysis',
     loadComponent: () => import('@pages').then((m) => m.Analysis),
   },

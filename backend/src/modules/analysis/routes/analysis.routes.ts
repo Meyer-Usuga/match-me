@@ -69,6 +69,12 @@ router.get(
   analysisController.getUserAnalyses,
 );
 
+router.get(
+  "/:id",
+  authMiddleware.required,
+  analysisController.getAnalysisById,
+);
+
 router.delete(
   "/delete/:id",
   authMiddleware.required,

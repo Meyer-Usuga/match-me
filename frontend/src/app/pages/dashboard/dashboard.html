@@ -93,7 +93,7 @@
             </div>
 
             <div class="dashboard-card__footer">
-              <app-button variant="secondary" size="sm" routerLink="/analysis">
+              <app-button variant="secondary" size="sm" [routerLink]="['/detail', item.id]">
                 Ver detalle
               </app-button>
               <app-button variant="danger" size="sm" (click)="onDeleteRequest(item)">

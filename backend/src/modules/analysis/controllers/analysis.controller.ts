@@ -61,6 +61,29 @@ export class AnalysisController {
     }
   }
 
+  public getAnalysisById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const analysisId = String(req.params.id);
+      const userId = req.user!.id;
+
+      const analysis = await this.analysisService.getAnalysisById(
+        analysisId,
+        userId,
+      );
+
+      res.status(200).json({
+        message: "Analysis found successfully!",
+        data: analysis,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public getUserAnalyses = async (
     req: Request,
     res: Response,

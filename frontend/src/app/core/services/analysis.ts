@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CreateAnalysisRequest, CreatedAnalysisResponse, CreatedUserAnalysisResponse } from '../interfaces';
+import { CreateAnalysisRequest, CreatedAnalysisResponse, CreatedUserAnalysisResponse, AnalysisDetailResponse } from '../interfaces';
 import { environment } from 'app/environments';
 import { getCookie } from '../utils/cookie.utils';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +47,21 @@ export class AnalysisService {
     }
 
     return of(false);
+  }
+
+  getAnalysisById(analysisId: string): Observable<AnalysisDetailResponse> {
+    const token = getCookie('access_token');
+
+    if (token) {
+      return this.httpService
+        .get<{ message: string; data: AnalysisDetailResponse }>(
+          `${this.apiUrl}/analysis/${analysisId}`,
+          { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+        )
+        .pipe(map((response) => response.data));
+    }
+
+    return throwError(() => new Error('Not authenticated'));
   }
 
   public getUserAnalyses(): Observable<CreatedUserAnalysisResponse[]> {

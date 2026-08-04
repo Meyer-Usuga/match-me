@@ -126,6 +126,37 @@ export class AnalysisService {
     await this.analysisRepository.delete(analysisId);
   }
 
+  public async getAnalysisById(analysisId: string, userId: string) {
+    const analysis = await this.analysisRepository.findById(analysisId);
+
+    if (!analysis) {
+      throw new AppError({
+        message: "Analysis not found!",
+        statusCode: 404,
+      });
+    }
+
+    if (analysis.userId !== userId) {
+      throw new AppError({
+        message: "You are not authorized to view this analysis!",
+        statusCode: 403,
+      });
+    }
+
+    return {
+      id: analysis.id,
+      company: analysis.company,
+      jobTitle: analysis.jobTitle,
+      jobDescription: analysis.jobDescription,
+      score: analysis.score,
+      matchedSkills: analysis.matchedSkills,
+      missingSkills: analysis.missingSkills,
+      aiResult: analysis.aiResult,
+      status: analysis.status,
+      date: analysis.createdAt,
+    };
+  }
+
   public async getUserAnalyses(userId: string) {
     const analyses = await this.analysisRepository.findByUserId(userId);
     

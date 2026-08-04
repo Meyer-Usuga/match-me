@@ -38,6 +38,19 @@ export interface CreatedUserAnalysisResponse {
   date: string;
 }
 
+export interface AnalysisDetailResponse {
+  id: string;
+  company?: string;
+  jobTitle?: string;
+  jobDescription: string;
+  score: number;
+  matchedSkills: string[];
+  missingSkills: string[];
+  aiResult: AiResult;
+  status: string;
+  date: string;
+}
+
 export type RegisterRequest = Pick<User, 'email' | 'password' | 'confirmPassword' |  'name'>
 
 export type LoginRequest = Pick<User, 'email' | 'password'>

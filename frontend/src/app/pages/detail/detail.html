@@ -1,0 +1,51 @@
+<div class="detail">
+  <app-navbar />
+
+  <main class="detail__content">
+    <header class="detail__header">
+      <div class="detail__header-top">
+        <app-button variant="secondary" size="sm" routerLink="/dashboard">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="margin-right: 6px; vertical-align: middle;"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Volver
+        </app-button>
+      </div>
+
+      <h1 class="detail__title">Detalle del análisis</h1>
+      <p class="detail__subtitle">Resultado completo de compatibilidad de tu postulación</p>
+    </header>
+
+    @if (loading()) {
+      <div class="detail__skeleton">
+        <div class="skeleton skeleton--card"></div>
+      </div>
+    } @else if (analysis(); as result) {
+      <app-result-card
+        [score]="result.score"
+        [company]="result.company"
+        [jobTitle]="result.jobTitle"
+        [matchedSkills]="result.matchedSkills"
+        [missingSkills]="result.missingSkills"
+        [aiResult]="result.aiResult"
+      />
+    } @else {
+      <div class="detail__error">
+        <h2 class="detail__error-title">No se encontró el análisis</h2>
+        <p class="detail__error-text">Es posible que el análisis haya sido eliminado o no tengas acceso a él.</p>
+        <app-button routerLink="/dashboard">Volver al dashboard</app-button>
+      </div>
+    }
+  </main>
+</div>
