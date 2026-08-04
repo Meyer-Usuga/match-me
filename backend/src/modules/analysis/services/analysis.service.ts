@@ -72,4 +72,16 @@ export class AnalysisService {
 
     return await this.analysisRepository.create(analysisData);
   }
+
+  public async getUserAnalyses(userId: string) {
+    const analyses = await this.analysisRepository.findByUserId(userId);
+    
+    return analyses.map((analysis) => ({
+      id: analysis.id,
+      jobTitle: analysis.jobTitle,
+      company: analysis.company,
+      score: analysis.score,
+      date: analysis.createdAt,
+    }));
+  }
 }

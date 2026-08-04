@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CreateAnalysisRequest, CreatedAnalysisResponse } from '../interfaces';
+import { CreateAnalysisRequest, CreatedAnalysisResponse, CreatedUserAnalysisResponse } from '../interfaces';
 import { environment } from 'app/environments';
-import { map, Observable } from 'rxjs';
+import { getCookie } from '../utils/cookie.utils';
+import { map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +14,39 @@ export class AnalysisService {
 
   createAnalysis(request: CreateAnalysisRequest): Observable<CreatedAnalysisResponse> {
     const formData = this.buildFormData(request);
+    const token = getCookie('access_token');
+
+    if (token) {
+      return this.httpService
+        .post<{ message: string; data: CreatedAnalysisResponse }>(
+          `${this.apiUrl}/analysis`,
+          formData,
+          { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) },
+        )
+        .pipe(map((response) => response.data));
+    }
 
     return this.httpService
-      .post<{ message: string; data: CreatedAnalysisResponse }>(`${this.apiUrl}/analysis`, formData)
+      .post<{ message: string; data: CreatedAnalysisResponse }>(
+        `${this.apiUrl}/analysis/guest`,
+        formData,
+      )
       .pipe(map((response) => response.data));
+  }
+
+  public getUserAnalyses(): Observable<CreatedUserAnalysisResponse[]> {
+    const token = getCookie('access_token');
+
+    if (token) {
+      return this.httpService
+        .get<{ message: string; data: CreatedUserAnalysisResponse[] }>(
+          `${this.apiUrl}/analysis/list`,
+          { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+        )
+        .pipe(map((response) => response.data));
+    }
+
+    return of([]);
   }
 
   private buildFormData(request: CreateAnalysisRequest): FormData {

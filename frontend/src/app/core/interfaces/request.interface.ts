@@ -29,6 +29,14 @@ export interface CreatedAnalysisResponse {
   errorMessage?: string;
 }
 
+export interface CreatedUserAnalysisResponse {
+  id: string;
+  jobTitle: string;
+  company: string;
+  score: number;
+  date: string;
+}
+
 export type RegisterRequest = Pick<User, 'email' | 'password' | 'confirmPassword' |  'name'>
 
 export type LoginRequest = Pick<User, 'email' | 'password'>

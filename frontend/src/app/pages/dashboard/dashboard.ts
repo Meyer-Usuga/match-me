@@ -1,5 +1,7 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { AnalysisService } from '@core';
 import { Navbar, Button } from 'app/shared';
 
 interface MockAnalysis {
@@ -17,6 +19,8 @@ interface MockAnalysis {
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
+  readonly analysisService = inject(AnalysisService);
+  readonly listAnalyses = toSignal(this.analysisService.getUserAnalyses(), { initialValue: []});
   readonly showEmpty = signal(false);
 
   readonly allMocks: MockAnalysis[] = [

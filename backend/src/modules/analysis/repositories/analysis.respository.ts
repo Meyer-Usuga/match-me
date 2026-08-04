@@ -21,4 +21,22 @@ export class AnalysisRepository {
   }
   public async findById(id: string) {}
   public async update(id: string, data: Partial<CreateAnalysisData>) {}
+
+  public async findByUserId(userId: string) {
+    return await prisma.analysis.findMany({
+      select: {
+        id: true,
+        jobTitle: true,
+        company: true,
+        score: true,
+        createdAt: true,
+      },
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
 }

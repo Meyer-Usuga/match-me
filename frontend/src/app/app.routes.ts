@@ -24,7 +24,6 @@ export const routes: Routes = [
   {
     path: 'analysis',
     loadComponent: () => import('@pages').then((m) => m.Analysis),
-    canActivate: [authGuard],
   },
   {
     path: '',

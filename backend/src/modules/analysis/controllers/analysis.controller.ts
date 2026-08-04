@@ -37,4 +37,23 @@ export class AnalysisController {
       next(error);
     }
   };
+
+  public getUserAnalyses = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const userId = req.user!.id;
+
+      const analyses = await this.analysisService.getUserAnalyses(userId);
+
+      res.status(200).json({
+        message: "Analyses found successfully!",
+        data: analyses,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }

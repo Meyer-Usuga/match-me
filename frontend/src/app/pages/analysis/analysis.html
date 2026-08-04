@@ -3,7 +3,7 @@
 
   <section class="analysis__hero">
     <div class="analysis__hero-content">
-      <h1 class="analysis__title">Prueba como invitado</h1>
+      <h1 class="analysis__title">{{ isLoggedIn ? 'Analiza tu perfil' : 'Prueba como invitado' }}</h1>
       <p class="analysis__subtitle">Analiza tu perfil y una oferta laboral</p>
       <p class="analysis__description">
         Sube tu hoja de vida en PDF, completa los datos de la oferta y obtén un análisis
@@ -194,22 +194,24 @@
           <app-button (click)="reset()">Nuevo análisis</app-button>
         </div>
       }
-      <p class="analysis__note">
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-        </svg>
-        Tus datos no se almacenan, esta es una prueba como invitado.
-      </p>
+      @if(!isLoggedIn) {
+        <p class="analysis__note">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Tus datos no se almacenarán, esta es una prueba como invitado.
+        </p>
+      }
     </div>
   </div>
 </div>

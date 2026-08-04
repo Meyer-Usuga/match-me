@@ -51,9 +51,22 @@ const multerMiddleware = new MulterMiddleware();
 
 router.post(
   "/",
+  authMiddleware.required,
+  multerMiddleware.upload.single("cv"),
+  analysisController.create,
+);
+
+router.post(
+  "/guest",
   authMiddleware.optional,
   multerMiddleware.upload.single("cv"),
   analysisController.create,
+);
+
+router.get(
+  "/list",
+  authMiddleware.required,
+  analysisController.getUserAnalyses,
 );
 
 export default router;

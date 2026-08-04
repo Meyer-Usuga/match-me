@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { form, maxLength, minLength, required, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
-import { AiResult, AnalysisService, CreateAnalysisRequest, CreatedAnalysisResponse } from '@core';
+import { AiResult, AnalysisService, CreateAnalysisRequest, CreatedAnalysisResponse, getCookie } from '@core';
 import { Button, Input, Navbar, ResultCard, Stepper, StepperStep } from 'app/shared';
 
 const EMPTY_AI_RESULT: AiResult = {
@@ -24,6 +24,7 @@ export class Analysis implements OnDestroy {
   readonly analysisService = inject(AnalysisService);
   readonly result = signal<CreatedAnalysisResponse | null>(null);
   readonly analyzing = signal<boolean>(false);
+  readonly isLoggedIn = getCookie('access_token') !== null;
 
   readonly progressSteps = [
     'Extrayendo skills',
