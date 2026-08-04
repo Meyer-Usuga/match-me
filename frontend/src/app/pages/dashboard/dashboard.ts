@@ -1,68 +1,62 @@
-import { Component, signal, computed, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AnalysisService } from '@core';
-import { Navbar, Button, Gauge } from 'app/shared';
-
-interface MockAnalysis {
-  id: string;
-  company: string;
-  jobTitle: string;
-  score: number;
-  date: string;
-}
+import { AnalysisService, CreatedUserAnalysisResponse, getCookie, setCookie } from '@core';
+import { Navbar, Button, Gauge, Modal } from 'app/shared';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Navbar, Button, Gauge, RouterLink],
+  imports: [Navbar, Button, Gauge, Modal, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
-  readonly analysisService = inject(AnalysisService);
-  readonly listAnalyses = toSignal(this.analysisService.getUserAnalyses());
-  readonly loading = computed(() => this.listAnalyses() === undefined);
-  readonly showEmpty = signal(false);
+  readonly #analysisService = inject(AnalysisService);
+  readonly listAnalyses = signal<CreatedUserAnalysisResponse[]>([]);
+  readonly loading = signal(true);
 
   readonly skeletonCards = Array.from({ length: 6 }, (_, index) => index);
 
-  readonly allMocks: MockAnalysis[] = [
-    {
-      id: '1',
-      company: 'Google',
-      jobTitle: 'Senior Frontend Developer',
-      score: 87,
-      date: 'Hace 2 horas',
-    },
-    {
-      id: '2',
-      company: 'Stripe',
-      jobTitle: 'Software Engineer (React/TypeScript)',
-      score: 94,
-      date: 'Ayer',
-    },
-    {
-      id: '3',
-      company: 'Netflix',
-      jobTitle: 'UI Engineer',
-      score: 62,
-      date: 'Hace 3 días',
-    },
-    {
-      id: '4',
-      company: 'MercadoLibre',
-      jobTitle: 'Fullstack Engineer',
-      score: 75,
-      date: 'Hace 1 semana',
-    },
-  ];
+  readonly deleteTarget = signal<CreatedUserAnalysisResponse | null>(null);
 
-  readonly analyses = computed(() => {
-    return this.showEmpty() ? [] : this.allMocks;
-  });
+  constructor() {
+    this.refreshAnalyses();
+  }
 
-  toggleMocks() {
-    this.showEmpty.update((prev) => !prev);
+  refreshAnalyses() {
+    this.#analysisService.getUserAnalyses().subscribe({
+      next: (analyses) => {
+        this.listAnalyses.set(analyses);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.loading.set(false);
+      },
+    });
+  }
+
+  closeDeleteModal() {
+    this.deleteTarget.set(null);
+  }
+
+  onConfirmDelete() {
+    if (!this.deleteTarget()) return;
+
+    this.#analysisService.deleteAnalysis(this.deleteTarget()!.id).subscribe({
+      next: () => {
+        const current = Number(getCookie('analyses_count') ?? -1);
+        setCookie('analyses_count', String(Math.max(0, current - 1)), 1);
+        this.refreshAnalyses();
+        this.closeDeleteModal();
+      },
+      error: (error) => {
+        this.closeDeleteModal();
+        console.error(error);
+      },
+    });
+  }
+
+  onDeleteRequest(item: CreatedUserAnalysisResponse) {
+    this.deleteTarget.set(item);
   }
 
   formatDate(value: string): string {

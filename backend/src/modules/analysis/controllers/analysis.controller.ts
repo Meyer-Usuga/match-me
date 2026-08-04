@@ -41,6 +41,26 @@ export class AnalysisController {
     }
   };
 
+  public delete = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const analysisId = String(req.params.id);
+      const userId = req.user?.id;
+
+      await this.analysisService.delete(analysisId, userId as string);
+
+      res.status(200).json({
+        message: "Analysis deleted successfully!",
+        data: true,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   public getUserAnalyses = async (
     req: Request,
     res: Response,

@@ -106,6 +106,26 @@ export class AnalysisService {
     return await this.analysisRepository.create(analysisData);
   }
 
+  public async delete(analysisId: string, userId: string) {
+    const analysis = await this.analysisRepository.findById(analysisId);
+
+    if (!analysis) {
+      throw new AppError({
+        message: "Analysis not found!",
+        statusCode: 404,
+      });
+    }
+
+    if (analysis.userId !== userId) {
+      throw new AppError({
+        message: "You are not authorized to delete this analysis!",
+        statusCode: 403,
+      });
+    }
+
+    await this.analysisRepository.delete(analysisId);
+  }
+
   public async getUserAnalyses(userId: string) {
     const analyses = await this.analysisRepository.findByUserId(userId);
     

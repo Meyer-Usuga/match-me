@@ -7,7 +7,7 @@ import { Component, input } from '@angular/core';
   styleUrl: './button.scss',
 })
 export class Button {
-  readonly variant = input<'primary' | 'secondary'>('primary');
+  readonly variant = input<'primary' | 'secondary' | 'danger'>('primary');
   readonly size = input<'sm' | 'md'>('md');
   readonly full = input(false);
   readonly disabled = input(false);

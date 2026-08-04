@@ -19,7 +19,23 @@ export class AnalysisRepository {
       },
     });
   }
-  public async findById(id: string) {}
+  
+  public async delete(id: string) {
+    return await prisma.analysis.delete({
+      where: {
+        id,
+      },
+    });
+  }
+  
+  public async findById(id: string) {
+    return await prisma.analysis.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+  
   public async update(id: string, data: Partial<CreateAnalysisData>) {}
 
   public async findByUserId(userId: string) {

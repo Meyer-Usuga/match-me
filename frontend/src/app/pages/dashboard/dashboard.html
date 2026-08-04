@@ -24,7 +24,7 @@
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          {{ listAnalyses()?.length === 0 ? 'Crear primer análisis' : 'Crear nuevo análisis'}}
+          {{ listAnalyses().length === 0 ? 'Crear primer análisis' : 'Crear nuevo análisis'}}
         </app-button> 
       </div>
     </header>
@@ -49,7 +49,7 @@
           </article>
         }
       </section>
-    } @else if (listAnalyses()!.length === 0) {
+    } @else if (listAnalyses().length === 0) {
       <section class="dashboard__empty-state">
         <div class="dashboard__empty-icon-container">
           <svg
@@ -96,10 +96,49 @@
               <app-button variant="secondary" size="sm" routerLink="/analysis">
                 Ver detalle
               </app-button>
+              <app-button variant="danger" size="sm" (click)="onDeleteRequest(item)">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  style="margin-right: 6px; vertical-align: middle;"
+                >
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+                Eliminar
+              </app-button>
             </div>
           </article>
         }
       </section>
     }
   </main>
+
+  <app-modal [isOpen]="!!deleteTarget()" (close)="closeDeleteModal()">
+    <div class="delete-modal">
+      <div class="delete-modal__icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+      </div>
+      <h2 class="delete-modal__title">Eliminar análisis</h2>
+      <p class="delete-modal__text">
+        ¿Estás seguro de que deseas eliminar el análisis de {{ deleteTarget()?.jobTitle }}?
+        Esta acción no se puede deshacer.
+      </p>
+      <div class="delete-modal__actions">
+        <app-button variant="secondary" (click)="closeDeleteModal()">Cancelar</app-button>
+        <app-button variant="danger" (click)="onConfirmDelete()">Eliminar</app-button>
+      </div>
+    </div>
+  </app-modal>
 </div>

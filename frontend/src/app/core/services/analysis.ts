@@ -34,6 +34,21 @@ export class AnalysisService {
       .pipe(map((response) => response.data));
   }
 
+  deleteAnalysis(analysisId: string): Observable<boolean> {
+    const token = getCookie('access_token');
+
+    if (token) {
+      return this.httpService
+        .delete<{ message: string; data: boolean }>(
+          `${this.apiUrl}/analysis/delete/${analysisId}`,
+          { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) },
+        )
+        .pipe(map((response) => response.data));
+    }
+
+    return of(false);
+  }
+
   public getUserAnalyses(): Observable<CreatedUserAnalysisResponse[]> {
     const token = getCookie('access_token');
 

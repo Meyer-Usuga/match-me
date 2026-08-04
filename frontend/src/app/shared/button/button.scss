@@ -49,6 +49,23 @@
     }
   }
 
+  &--danger {
+    color: #e74c5e;
+    background: transparent;
+    border-color: rgba(231, 76, 94, 0.35);
+
+    &:hover {
+      background: rgba(231, 76, 94, 0.06);
+      border-color: rgba(231, 76, 94, 0.6);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      background: transparent;
+      border-color: rgba(231, 76, 94, 0.15);
+    }
+  }
+
   &--full {
     width: 100%;
   }

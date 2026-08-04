@@ -69,4 +69,10 @@ router.get(
   analysisController.getUserAnalyses,
 );
 
+router.delete(
+  "/delete/:id",
+  authMiddleware.required,
+  analysisController.delete,
+);
+
 export default router;
