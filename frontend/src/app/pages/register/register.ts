@@ -21,6 +21,8 @@ export class Register {
     confirmPassword: '',
   });
 
+  readonly errorMessage = signal<string | null>(null);
+
   readonly schema = schema<RegisterRequest>((c) => {
     required(c.name);
     required(c.email);
@@ -55,6 +57,8 @@ export class Register {
       return;
     }
 
+    this.errorMessage.set(null);
+
     this.#authService.registerUser(this.credentials()).subscribe({
       next: (response: RegisterResponse) => {
         setCookie('access_token', response.accessToken, 1);
@@ -62,6 +66,10 @@ export class Register {
       },
       error: (error) => {
         console.error(error);
+        const serverMessage = error?.error?.message || error?.error?.error;
+        this.errorMessage.set(
+          serverMessage || 'No se pudo crear la cuenta. Inténtalo de nuevo.'
+        );
       },
     });
   }

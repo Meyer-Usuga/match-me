@@ -4,3 +4,6 @@ export { Navbar } from './navbar/navbar';
 export { ResultCard } from './result-card/result-card';
 export { Stepper } from './stepper/stepper';
 export type { StepperStep } from './stepper/stepper';
+export { Modal } from './modal/modal';
+
+

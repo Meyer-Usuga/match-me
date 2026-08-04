@@ -19,6 +19,8 @@ export class Login {
     password: '',
   });
 
+  readonly errorMessage = signal<string | null>(null);
+
   readonly schema = schema<LoginRequest>((c) => {
     required(c.email);
     email(c.email);
@@ -51,13 +53,16 @@ export class Login {
       return;
     }
 
+    this.errorMessage.set(null);
+
     this.#authService.loginUser(this.credentials()).subscribe({
       next: (response: LoginUserResponse) => {
         setCookie('access_token', response.accessToken, 1);
-        this.#router.navigate(['/home']);
+        this.#router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error(error);
+        this.errorMessage.set('Correo o contraseña incorrectos.');
       },
     });
   }

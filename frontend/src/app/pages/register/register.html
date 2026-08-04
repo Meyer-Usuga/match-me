@@ -57,6 +57,11 @@
                 : undefined
           "
         />
+        @if (errorMessage()) {
+          <div class="register__error-text">
+            {{ errorMessage() }}
+          </div>
+        }
         <app-button [full]="true" (click)="onSubmit()">Crear cuenta</app-button>
 
         <section class="register__benefits">

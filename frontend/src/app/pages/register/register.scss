@@ -64,6 +64,14 @@
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
   }
 
+  &__error-text {
+    color: #ef4444;
+    font-size: pxToRem(13);
+    font-weight: 500;
+    margin-top: pxToRem(-8);
+    text-align: left;
+  }
+
   &__guest {
     margin: pxToRem(20) 0 0;
     font-size: pxToRem(14);

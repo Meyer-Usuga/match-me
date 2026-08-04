@@ -76,6 +76,7 @@
     text-decoration: none;
     white-space: nowrap;
     transition: color 0.2s, opacity 0.2s;
+    cursor: pointer;
 
     svg {
       flex-shrink: 0;
@@ -129,5 +130,51 @@
         display: none;
       }
     }
+  }
+}
+
+.auth-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.auth-modal-icon-container {
+  width: pxToRem(64);
+  height: pxToRem(64);
+  border-radius: 50%;
+  background: rgba($color-primary, 0.08);
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: pxToRem(20);
+}
+
+.auth-modal-title {
+  margin: 0 0 pxToRem(12);
+  font-size: pxToRem(20);
+  font-weight: 700;
+  color: $color-neutral;
+}
+
+.auth-modal-text {
+  margin: 0 0 pxToRem(28);
+  font-size: pxToRem(15);
+  line-height: 1.5;
+  color: lighten($color-neutral, 20%);
+}
+
+.auth-modal-actions {
+  display: flex;
+  gap: pxToRem(12);
+  width: 100%;
+
+  > * {
+    flex: 1;
+    display: flex;
+    justify-content: center;
   }
 }

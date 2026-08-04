@@ -1,12 +1,13 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
 import { Button } from '../button/button';
 import { getCookie, deleteCookie } from '@core';
+import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'app-navbar',
-  imports: [Button, RouterLink, RouterLinkActive],
+  imports: [Button, RouterLink, RouterLinkActive, Modal],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
@@ -16,6 +17,8 @@ export class Navbar implements OnDestroy {
     .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
     .subscribe(() => this.scrollToFragment());
 
+  readonly showAuthModal = signal(false);
+
   get isLoggedIn(): boolean {
     return !!getCookie('access_token');
   }
@@ -23,6 +26,13 @@ export class Navbar implements OnDestroy {
   logout() {
     deleteCookie('access_token');
     this.router.navigate(['/login']);
+  }
+
+  onDashboardClick(event: Event) {
+    if (!this.isLoggedIn) {
+      event.preventDefault();
+      this.showAuthModal.set(true);
+    }
   }
 
   private scrollToFragment() {
