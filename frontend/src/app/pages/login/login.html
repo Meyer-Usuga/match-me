@@ -19,6 +19,7 @@
           autocomplete="email"
           [value]="credentials().email"
           (valueChange)="onEmailChange($event)"
+          (keyup.enter)="onSubmit()"
           [error]="isInvalid('email') ? 'Ingresa un correo electrónico válido' : undefined"
         />
         <app-input
@@ -29,6 +30,7 @@
           autocomplete="current-password"
           [value]="credentials().password"
           (valueChange)="onPasswordChange($event)"
+          (keyup.enter)="onSubmit()"
           [error]="isInvalid('password') ? 'Ingresa tu contraseña' : undefined"
         />
         @if (errorMessage()) {

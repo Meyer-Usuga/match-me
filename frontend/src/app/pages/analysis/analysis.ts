@@ -1,5 +1,5 @@
 import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
-import { form, maxLength, minLength, required, schema } from '@angular/forms/signals';
+import { disabled, form, maxLength, minLength, required, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { AiResult, AnalysisService, CreateAnalysisRequest, CreatedAnalysisResponse, getCookie } from '@core';
 import { Button, Input, Navbar, ResultCard, Stepper, StepperStep } from 'app/shared';
@@ -52,6 +52,7 @@ export class Analysis implements OnDestroy {
   };
 
   readonly request = signal<CreateAnalysisRequest>({ ...this.initialRequest });
+  readonly useLastCv = signal(false);
 
   readonly schema = schema<CreateAnalysisRequest>((a) => {
     required(a.company);
@@ -60,6 +61,7 @@ export class Analysis implements OnDestroy {
     minLength(a.jobDescription, 500);
     maxLength(a.jobDescription, 2000);
     required(a.cvFile);
+    disabled(a.cvFile, () => this.useLastCv());
   });
 
   readonly createAnalysisForm = form(this.request, this.schema);
@@ -109,7 +111,17 @@ export class Analysis implements OnDestroy {
     this.createAnalysisForm.cvFile().markAsTouched();
 
     if (file) {
+      this.useLastCv.set(false);
       this.activeStep.set(2);
+    }
+  }
+
+  onUseLastCvChange(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    this.useLastCv.set(checked);
+
+    if (checked) {
+      this.request.update((value) => ({ ...value, cvFile: null }));
     }
   }
 
@@ -117,7 +129,7 @@ export class Analysis implements OnDestroy {
     const step = this.activeStep();
 
     if (step === 1) {
-      if (this.request().cvFile) {
+      if (this.request().cvFile || this.useLastCv()) {
         this.activeStep.set(2);
       }
     } else if (step === 2) {
@@ -193,6 +205,7 @@ export class Analysis implements OnDestroy {
   reset() {
     this.request.set({ ...this.initialRequest });
     this.createAnalysisForm().reset();
+    this.useLastCv.set(false);
     this.activeStep.set(1);
   }
 }

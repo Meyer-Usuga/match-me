@@ -18,19 +18,14 @@
     @if (activeStep() === 1) {
       <div class="analysis__card">
         <h4 class="analysis__card-title">Tu perfil</h4>
-        <label class="analysis__upload" [class.analysis__upload--error]="isInvalid('cvFile')">
-          <input
-            class="analysis__upload-input"
-            type="file"
-            accept="application/pdf"
-            (change)="onFileSelected($event)"
-          />
-          @if (fileName()) {
-            <div class="analysis__upload-content">
-              <span class="analysis__upload-file">{{ fileName() }}</span>
-              <span class="analysis__upload-hint">Haz clic para cambiar el archivo</span>
-            </div>
-          } @else {
+        @if (isLoggedIn) {
+          <label class="analysis__checkbox">
+            <input type="checkbox" [checked]="useLastCv()" (change)="onUseLastCvChange($event)" />
+            <span>Utilizar la información del último cv</span>
+          </label>
+        }
+        @if (useLastCv()) {
+          <div class="analysis__upload analysis__upload--reused">
             <div class="analysis__upload-content">
               <svg
                 class="analysis__upload-icon"
@@ -43,17 +38,50 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="17 8 12 3 7 8" />
-                <line x1="12" y1="3" x2="12" y2="15" />
+                <polyline points="20 6 9 17 4 12" />
               </svg>
-              <span class="analysis__upload-text">Sube tu CV en PDF</span>
-              <span class="analysis__upload-hint">Haz clic o arrastra tu archivo aquí</span>
+              <span class="analysis__upload-text">Usando tu último CV</span>
+              <span class="analysis__upload-hint">Se utilizará la información de tu último análisis</span>
             </div>
+          </div>
+        } @else {
+          <label class="analysis__upload" [class.analysis__upload--error]="isInvalid('cvFile')">
+            <input
+              class="analysis__upload-input"
+              type="file"
+              accept="application/pdf"
+              (change)="onFileSelected($event)"
+            />
+            @if (fileName()) {
+              <div class="analysis__upload-content">
+                <span class="analysis__upload-file">{{ fileName() }}</span>
+                <span class="analysis__upload-hint">Haz clic para cambiar el archivo</span>
+              </div>
+            } @else {
+              <div class="analysis__upload-content">
+                <svg
+                  class="analysis__upload-icon"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+                <span class="analysis__upload-text">Sube tu CV en PDF</span>
+                <span class="analysis__upload-hint">Haz clic o arrastra tu archivo aquí</span>
+              </div>
+            }
+          </label>
+          @if (isInvalid('cvFile')) {
+            <span class="analysis__card-error">Sube tu CV en PDF</span>
           }
-        </label>
-        @if (isInvalid('cvFile')) {
-          <span class="analysis__card-error">Sube tu CV en PDF</span>
         }
       </div>
     }
@@ -143,7 +171,7 @@
 
         @if(request().jobDescription && request().jobDescription.length >= 500) {
           <p class="analysis__card-info">
-            La información ha sido limpiada y optimizada para un mejor análisis. Caracteres: {{ request().jobDescription?.length }}
+            La información ha sido limpiada y optimizada para un mejor análisis. Caracteres: {{ request().jobDescription.length }}
           </p>
         }
       </div>
@@ -168,7 +196,7 @@
   <div class="analysis__cta">
     <div class="analysis__cta-inner">
       @if (activeStep() === 1) {
-        <app-button [full]="true" [disabled]="!fileName()" (click)="next()">
+        <app-button [full]="true" [disabled]="!fileName() && !useLastCv()" (click)="next()">
           Siguiente
         </app-button>
       } @else if (activeStep() === 2) {

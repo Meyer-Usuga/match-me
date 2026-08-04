@@ -106,6 +106,28 @@
     color: #e74c5e;
   }
 
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    gap: pxToRem(10);
+    font-size: pxToRem(14);
+    color: $color-neutral;
+    cursor: pointer;
+    user-select: none;
+
+    span {
+      opacity: 0.7;
+    }
+
+    input[type='checkbox'] {
+      width: pxToRem(18);
+      height: pxToRem(18);
+      accent-color: $color-primary;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  }
+
   &__results {
     display: flex;
     width: 100%;
@@ -143,6 +165,20 @@
     .analysis__upload-content {
       border-color: #e74c5e;
       background: rgba(231, 76, 94, 0.04);
+    }
+  }
+
+  &__upload--reused {
+    cursor: default;
+
+    .analysis__upload-content {
+      border-style: solid;
+      border-color: rgba($color-primary, 0.35);
+
+      &:hover {
+        border-color: rgba($color-primary, 0.35);
+        background: rgba($color-primary, 0.03);
+      }
     }
   }
 
