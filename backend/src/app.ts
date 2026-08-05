@@ -9,7 +9,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:4200',
-    'https://match-me.vercel.app'
+    'https://match-me-green.vercel.app'
   ],
   credentials: true,
 }));
