@@ -18,9 +18,18 @@ export class Navbar implements OnDestroy {
     .subscribe(() => this.scrollToFragment());
 
   readonly showAuthModal = signal(false);
+  readonly menuOpen = signal(false);
 
   get isLoggedIn(): boolean {
     return !!getCookie('access_token');
+  }
+
+  toggleMenu() {
+    this.menuOpen.update((open) => !open);
+  }
+
+  closeMenu() {
+    this.menuOpen.set(false);
   }
 
   logout() {
@@ -33,6 +42,7 @@ export class Navbar implements OnDestroy {
       event.preventDefault();
       this.showAuthModal.set(true);
     }
+    this.closeMenu();
   }
 
   private scrollToFragment() {
