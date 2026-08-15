@@ -121,14 +121,66 @@
             (valueChange)="onCompanyChange($event)"
             [error]="isInvalid('company') ? 'Ingresa el nombre de la empresa' : undefined"
           />
-          <app-input
-            id="job-title"
-            label="Título del puesto"
-            placeholder="Ej: Frontend Developer"
-            [value]="request().jobTitle"
-            (valueChange)="onJobTitleChange($event)"
-            [error]="isInvalid('jobTitle') ? 'Ingresa el título del puesto' : undefined"
-          />
+
+          <div
+            class="analysis__field-wrapper"
+            (focusin)="onJobTitleFocus()"
+            (focusout)="onJobTitleBlur()"
+          >
+            <app-input
+              id="job-title"
+              label="Título del puesto"
+              placeholder="Ej: Frontend Developer"
+              [value]="request().jobTitle"
+              (valueChange)="onJobTitleChange($event)"
+              [error]="isInvalid('jobTitle') ? 'Ingresa el título del puesto' : undefined"
+            />
+
+            @if (showSuggestions() && jobSuggestions().length > 0) {
+              <div class="analysis__suggestions">
+                <div class="analysis__suggestions-header">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <span>Sugerencias de puestos</span>
+                </div>
+                <ul class="analysis__suggestions-list">
+                  @for (title of jobSuggestions(); track $index) {
+                    <li
+                      class="analysis__suggestion-item"
+                      (mousedown)="$event.preventDefault(); selectJobTitle(title)"
+                    >
+                      <svg
+                        class="analysis__suggestion-icon"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0 2 2v16" />
+                      </svg>
+                      <span class="analysis__suggestion-text">{{ title }}</span>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+          </div>
         </div>
       </div>
     }

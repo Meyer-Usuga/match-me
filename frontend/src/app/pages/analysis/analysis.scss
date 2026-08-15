@@ -84,14 +84,111 @@
     flex-direction: column;
     gap: pxToRem(16);
 
-    app-input {
+    app-input,
+    .analysis__field-wrapper {
       flex: 1;
+      min-width: 0;
     }
 
     @include media-gtsm {
       flex-direction: row;
       gap: pxToRem(12);
     }
+  }
+
+  &__field-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__suggestions {
+    position: absolute;
+    top: calc(100% + #{pxToRem(6)});
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: $color-white;
+    border: 1px solid rgba($color-primary, 0.2);
+    border-radius: pxToRem(12);
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.08),
+      0 4px 12px rgba(124, 58, 237, 0.08);
+    overflow: hidden;
+    animation: suggestions-fade-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes suggestions-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__suggestions-header {
+    display: flex;
+    align-items: center;
+    gap: pxToRem(6);
+    padding: pxToRem(8) pxToRem(14);
+    background: rgba($color-primary, 0.04);
+    border-bottom: 1px solid rgba($color-primary, 0.08);
+    font-size: pxToRem(11);
+    font-weight: 600;
+    color: $color-primary;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__suggestions-list {
+    list-style: none;
+    margin: 0;
+    padding: pxToRem(4) 0;
+    max-height: pxToRem(200);
+    overflow-y: auto;
+  }
+
+  &__suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: pxToRem(10);
+    padding: pxToRem(10) pxToRem(14);
+    font-size: pxToRem(14);
+    font-weight: 500;
+    color: $color-neutral;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: rgba($color-primary, 0.06);
+      color: $color-primary;
+
+      .analysis__suggestion-icon {
+        color: $color-primary;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__suggestion-icon {
+    flex-shrink: 0;
+    color: rgba($color-neutral, 0.4);
+    transition: color 0.15s ease, transform 0.15s ease;
+  }
+
+  &__suggestion-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__card-info {

@@ -83,6 +83,31 @@ export class Analysis implements OnDestroy {
 
   readonly fileName = computed(() => this.request().cvFile?.name ?? null);
 
+  readonly showSuggestions = signal(false);
+
+  readonly jobTitles = signal<string[]>([
+    'Desarrollador de Software',
+    'Ingeniero de Software',
+    'Desarrollador Frontend',
+    'Desarrollador Backend',
+    'Desarrollador Fullstack',
+    'Software Developer',
+    'Tecnólogo en Sistemas',
+    'Ingeniero de Sistemas',
+  ]);
+
+  readonly jobSuggestions = computed(() => {
+    const jobTitle = this.request().jobTitle?.trim().toLowerCase() ?? '';
+    const titles = this.jobTitles();
+
+    if (!jobTitle) {
+      return titles.slice(0, 5);
+    }
+    return titles.filter(
+      (title) => title.toLowerCase().includes(jobTitle) && title.toLowerCase() !== jobTitle
+    );
+  });
+
   isInvalid(field: AnalysisFormField) {
     const state = this.createAnalysisForm[field]();
     return state.touched() && state.invalid();
@@ -94,6 +119,22 @@ export class Analysis implements OnDestroy {
 
   onJobTitleChange(value: string) {
     this.setValue('jobTitle', value);
+    this.showSuggestions.set(true);
+  }
+
+  onJobTitleFocus() {
+    this.showSuggestions.set(true);
+  }
+
+  onJobTitleBlur() {
+    setTimeout(() => {
+      this.showSuggestions.set(false);
+    }, 150);
+  }
+
+  selectJobTitle(title: string) {
+    this.setValue('jobTitle', title);
+    this.showSuggestions.set(false);
   }
 
   onJobDescriptionChange(value: string) {
