@@ -6,7 +6,7 @@
   min-height: 100dvh;
   padding-top: pxToRem(80);
   box-sizing: border-box;
-  background: #f8fafc; // Clean off-white background
+  background: $color-background;
 
   &__content {
     width: 100%;
@@ -34,7 +34,7 @@
     margin: 0 0 pxToRem(8);
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 700;
-    background: linear-gradient(135deg, #f857c1, #c85af4 50%, #7c3aed);
+    background: $gradient-primary;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -43,7 +43,7 @@
   &__subtitle {
     margin: 0;
     font-size: pxToRem(16);
-    color: lighten($color-neutral, 20%);
+    color: rgba($color-neutral, 0.8);
   }
 
   &__controls {
@@ -59,10 +59,10 @@
     justify-content: center;
     text-align: center;
     padding: pxToRem(60) pxToRem(24);
-    background: $color-white;
+    background: $color-surface;
     border: 1px dashed rgba($color-neutral, 0.15);
     border-radius: pxToRem(20);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 20px rgba($color-shadow, 0.02);
     margin-top: pxToRem(20);
   }
 
@@ -93,7 +93,7 @@
   &__empty-text {
     margin: 0 0 pxToRem(24);
     font-size: pxToRem(15);
-    color: lighten($color-neutral, 25%);
+    color: rgba($color-neutral, 0.75);
     max-width: pxToRem(400);
     line-height: 1.5;
   }
@@ -108,16 +108,16 @@
 .dashboard-card {
   display: flex;
   flex-direction: column;
-  background: $color-white;
+  background: $color-surface;
   border: 1px solid rgba($color-neutral, 0.06);
   border-radius: pxToRem(16);
   padding: pxToRem(24);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 12px rgba($color-shadow, 0.03);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease-in-out;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 12px 28px rgba($color-shadow, 0.06);
     border-color: rgba($color-primary, 0.15);
   }
 
@@ -149,11 +149,11 @@
     font-size: pxToRem(13);
     font-weight: 400;
     line-height: 1.5;
-    color: lighten($color-neutral, 25%);
+    color: rgba($color-neutral, 0.75);
   }
 
   &__date-label {
-    color: #000;
+    color: $color-neutral;
   }
 
   &__title {
@@ -191,8 +191,8 @@
     width: pxToRem(72);
     height: pxToRem(72);
     border-radius: 50%;
-    background: rgba(231, 76, 94, 0.1);
-    color: #e74c5e;
+    background: rgba($color-danger, 0.1);
+    color: $color-danger;
     margin-bottom: pxToRem(20);
   }
 
@@ -207,7 +207,7 @@
     margin: 0 0 pxToRem(24);
     font-size: pxToRem(15);
     line-height: 1.5;
-    color: lighten($color-neutral, 20%);
+    color: rgba($color-neutral, 0.8);
     max-width: pxToRem(360);
   }
 
@@ -243,7 +243,7 @@
     position: absolute;
     inset: 0;
     transform: translateX(-100%);
-    background: linear-gradient(90deg, transparent, rgba($color-white, 0.7), transparent);
+    background: linear-gradient(90deg, transparent, rgba($color-surface, 0.7), transparent);
     animation: shimmer 1.4s infinite;
   }
 

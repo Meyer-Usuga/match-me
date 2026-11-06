@@ -1,4 +1,23 @@
-$color-primary: #7C3AED;
-$color-secondary: #f1e0c6;
-$color-white: #ffffff;
-$color-neutral: #262626;
+@use "sass:color";
+
+$color-brick: #46403f;
+$color-sunset: #a08276;
+$color-rose: #BF7587;
+$color-plum: #993A8B;
+
+$color-primary: $color-brick;
+$color-secondary: $color-rose;
+$color-neutral: color.scale($color-plum, $lightness: -55%);
+$color-background: color.scale($color-sunset, $lightness: 92%);
+$color-surface: color.scale($color-sunset, $lightness: 97%);
+$color-on-primary: $color-surface;
+$color-shadow: $color-neutral;
+$color-danger: #B83A3A;
+$color-highlight: #FBBF24;
+
+$color-gradient-start: $color-sunset;
+$color-gradient-middle: $color-rose;
+$color-gradient-end: $color-plum;
+
+$gradient-primary: linear-gradient(135deg, $color-gradient-start, $color-gradient-middle 50%, $color-gradient-end);
+$gradient-primary-horizontal: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);

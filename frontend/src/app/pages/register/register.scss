@@ -6,7 +6,7 @@
   min-height: 100dvh;
   padding-top: pxToRem(80);
   box-sizing: border-box;
-  background: $color-white;
+  background: $color-background;
 
   &__body {
     display: flex;
@@ -36,7 +36,7 @@
     margin: 0 0 pxToRem(8);
     font-size: clamp(1.5rem, 4.5vw, 2.25rem);
     font-weight: 700;
-    background: linear-gradient(135deg, #f857c1, #c85af4 50%, #7c3aed);
+    background: $gradient-primary;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -58,14 +58,14 @@
     margin: 0 auto;
     padding: pxToRem(32);
     box-sizing: border-box;
-    background: #fff;
+    background: $color-surface;
     border: 1px solid rgba($color-neutral, 0.08);
     border-radius: pxToRem(16);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 24px rgba($color-shadow, 0.06);
   }
 
   &__error-text {
-    color: #ef4444;
+    color: $color-danger;
     font-size: pxToRem(13);
     font-weight: 500;
     margin-top: pxToRem(-8);

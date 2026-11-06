@@ -29,8 +29,8 @@
       opacity: 1;
 
       .stepper__number {
-        background: linear-gradient(135deg, #f857c1, #c85af4 50%, #7c3aed);
-        color: $color-white;
+        background: $gradient-primary;
+        color: $color-on-primary;
       }
     }
 
@@ -87,7 +87,7 @@
     max-width: pxToRem(80);
 
     &--completed {
-      background: linear-gradient(90deg, #f857c1, #7c3aed);
+      background: $gradient-primary-horizontal;
     }
   }
 }

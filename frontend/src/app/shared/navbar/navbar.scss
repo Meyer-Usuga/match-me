@@ -18,11 +18,11 @@
     gap: pxToRem(20);
     padding: pxToRem(10) pxToRem(20);
     border-radius: pxToRem(18);
-    background: rgba($color-white, 0.92);
+    background: rgba($color-surface, 0.92);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba($color-neutral, 0.06);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 30px rgba($color-shadow, 0.08);
   }
 
   &__top {
@@ -74,7 +74,7 @@
 
   &__brand-text {
     font-size: pxToRem(17);
-    font-weight: 700;
+    font-weight: 500;
     color: $color-neutral;
     white-space: nowrap;
   }
@@ -241,7 +241,7 @@
   margin: 0 0 pxToRem(28);
   font-size: pxToRem(15);
   line-height: 1.5;
-  color: lighten($color-neutral, 20%);
+  color: rgba($color-neutral, 0.8);
 }
 
 .auth-modal-actions {

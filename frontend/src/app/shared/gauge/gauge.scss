@@ -12,6 +12,16 @@
     transform: rotate(-90deg);
   }
 
+  &__stop {
+    &--start {
+      stop-color: $color-gradient-start;
+    }
+
+    &--end {
+      stop-color: $color-gradient-end;
+    }
+  }
+
   &__bg {
     fill: none;
     stroke: rgba($color-neutral, 0.06);
@@ -37,7 +47,7 @@
     font-size: pxToRem(20);
     font-weight: 700;
     line-height: 1;
-    background: linear-gradient(135deg, #f857c1, #c85af4 50%, #7c3aed);
+    background: $gradient-primary;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;

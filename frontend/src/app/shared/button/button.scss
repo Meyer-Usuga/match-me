@@ -12,8 +12,8 @@
   font-size: pxToRem(15);
   font-weight: 600;
   font-family: inherit;
-  color: $color-white;
-  background: linear-gradient(135deg, #F857C1, #C85AF4 50%, #7C3AED);
+  color: $color-on-primary;
+  background: $gradient-primary;
   cursor: pointer;
   text-decoration: none;
   transition: filter 0.2s, transform 0.15s;
@@ -50,19 +50,19 @@
   }
 
   &--danger {
-    color: #e74c5e;
+    color: $color-danger;
     background: transparent;
-    border-color: rgba(231, 76, 94, 0.35);
+    border-color: rgba($color-danger, 0.35);
 
     &:hover {
-      background: rgba(231, 76, 94, 0.06);
-      border-color: rgba(231, 76, 94, 0.6);
+      background: rgba($color-danger, 0.06);
+      border-color: rgba($color-danger, 0.6);
     }
 
     &:disabled {
       opacity: 0.3;
       background: transparent;
-      border-color: rgba(231, 76, 94, 0.15);
+      border-color: rgba($color-danger, 0.15);
     }
   }
 

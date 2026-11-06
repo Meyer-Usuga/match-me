@@ -3,7 +3,7 @@
 .home {
   display: flex;
   flex-direction: column;
-  background: $color-white;
+  background: $color-background;
 
   // ─── Hero ──────────────────────────────────────────────────────
 
@@ -63,7 +63,7 @@
   }
 
   &__tag-icon {
-    color: #fbbf24;
+    color: $color-highlight;
     flex-shrink: 0;
   }
 
@@ -76,7 +76,7 @@
   }
 
   &__title-accent {
-    background: linear-gradient(135deg, #f857c1, #c85af4 50%, #7c3aed);
+    background: $gradient-primary;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -194,7 +194,7 @@
     font-size: pxToRem(40);
     font-weight: 700;
     line-height: 1;
-    background: linear-gradient(135deg, #F857C1, #C85AF4 50%, #7C3AED);
+    background: $gradient-primary;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;

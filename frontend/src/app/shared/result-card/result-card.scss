@@ -2,10 +2,10 @@
 
 .result-card {
   width: 100%;
-  background: #fff;
+  background: $color-surface;
   border-radius: pxToRem(16);
   padding: pxToRem(32);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 24px rgba($color-shadow, 0.06);
   box-sizing: border-box;
 
   &__header {
@@ -130,7 +130,7 @@
     border-radius: 999px;
     font-size: pxToRem(12);
     font-weight: 500;
-    color: rgba(0, 0, 0, 0.8);
+    color: $color-neutral;
     background: rgba($color-primary, 0.1);
     opacity: 0.5;
   }

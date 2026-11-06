@@ -6,7 +6,7 @@
   min-height: 100dvh;
   padding-top: pxToRem(80);
   box-sizing: border-box;
-  background: #f8fafc;
+  background: $color-background;
 
   &__content {
     width: 100%;
@@ -29,7 +29,7 @@
     margin: 0 0 pxToRem(8);
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 700;
-    background: linear-gradient(135deg, #f857c1, #c85af4 50%, #7c3aed);
+    background: $gradient-primary;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -38,7 +38,7 @@
   &__subtitle {
     margin: 0;
     font-size: pxToRem(16);
-    color: lighten($color-neutral, 25%);
+    color: rgba($color-neutral, 0.75);
   }
 
   &__skeleton {
@@ -52,7 +52,7 @@
     align-items: center;
     text-align: center;
     padding: pxToRem(80) pxToRem(24);
-    background: $color-white;
+    background: $color-surface;
     border-radius: pxToRem(24);
   }
 
@@ -67,12 +67,12 @@
     margin: 0 0 pxToRem(24);
     font-size: pxToRem(15);
     line-height: 1.5;
-    color: lighten($color-neutral, 25%);
+    color: rgba($color-neutral, 0.75);
   }
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background: linear-gradient(90deg, rgba($color-secondary, 0.3) 25%, rgba($color-secondary, 0.6) 50%, rgba($color-secondary, 0.3) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: pxToRem(12);
